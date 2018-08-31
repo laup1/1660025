@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources><string name="hello_world">Bonjour!</string>
-    <string name="hauteur">Hauteur</string>
-    <string name="largeur">Largeur</string>
-    <string name="pourGagner">Pour gagner</string>
+
 </resources>
