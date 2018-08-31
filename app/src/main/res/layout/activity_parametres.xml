@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/largeur"
         tools:layout_editor_absoluteX="64dp"
-        tools:layout_editor_absoluteY="291dp" />
+        tools:layout_editor_absoluteY="292dp" />
 
     <Spinner
         android:id="@+id/spinnerHauteur"
@@ -88,21 +88,21 @@
         app:layout_constraintStart_toEndOf="@+id/largeur"
         app:layout_constraintTop_toBottomOf="@+id/spinnerHauteur"
         tools:layout_editor_absoluteX="202dp"
-        tools:layout_editor_absoluteY="181dp" />
+        tools:layout_editor_absoluteY="180dp" />
 
     <Spinner
         android:id="@+id/spinnerPourGagner"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="197dp"
+        android:layout_marginBottom="196dp"
         android:layout_marginEnd="75dp"
         android:layout_marginRight="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/pourGagner"
         app:layout_constraintTop_toBottomOf="@+id/spinnerLargeur"
-        tools:layout_editor_absoluteX="208dp"
-        tools:layout_editor_absoluteY="291dp" />
+        tools:layout_editor_absoluteX="199dp"
+        tools:layout_editor_absoluteY="289dp" />
 
 
 </ca.cours5b5.laurenperez.vues.VParametres>
