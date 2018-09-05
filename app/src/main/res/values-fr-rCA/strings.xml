@@ -3,4 +3,5 @@
     <string name="hauteur">Hauteur</string>
     <string name="largeur">Largeur</string>
     <string name="pourGagner">Pour gagner</string>
+    <string name="buttonMenuPrincipal">Paramètres</string>
 </resources>

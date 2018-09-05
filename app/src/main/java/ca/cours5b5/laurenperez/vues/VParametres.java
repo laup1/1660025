@@ -3,8 +3,15 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
+import android.util.Log;
 
-public class VParametres extends ConstraintLayout{
+import ca.cours5b5.laurenperez.activites.AParametres;
+
+public class VParametres extends Vue{
+
+    static{
+        Log.d("atelier04", AParametres.class.getSimpleName()+ ":static");
+    }
 
 
     public VParametres(Context context) {
@@ -17,5 +24,12 @@ public class VParametres extends ConstraintLayout{
 
     public VParametres(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected void onFinishInflate(){
+        super.onFinishInflate();
+        creerLog("onFinishInflate");
+
     }
 }
