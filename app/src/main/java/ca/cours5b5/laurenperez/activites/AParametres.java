@@ -1,20 +1,20 @@
 package ca.cours5b5.laurenperez.activites;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-
-import java.lang.reflect.Array;
+import java.util.Map;
 
 import ca.cours5b5.laurenperez.R;
+import ca.cours5b5.laurenperez.Serialisation.Jsonification;
+import ca.cours5b5.laurenperez.modeles.MParametres;
 import ca.cours5b5.laurenperez.vues.VParametres;
 
 public class AParametres extends Activite {
 
+
+    private  VParametres parametres = new VParametres(this);
+    private  MParametres modele = new MParametres();
 
 
     static{
@@ -26,7 +26,20 @@ public class AParametres extends Activite {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parametres);
-        VParametres parametres = new VParametres(this);
+
+        if(savedInstanceState != null) {
+
+            Map<String, Object> objetJson = modele.enObjetJson();
+
+            for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
+
+                String cle = entry.getKey();
+                Object valeur = entry.getValue();
+                String json = savedInstanceState.getString(cle);
+
+
+            }
+        }
 
 
 
@@ -55,6 +68,17 @@ public class AParametres extends Activite {
     @Override
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
+
+        Map<String, Object> objetJson = modele.enObjetJson();
+
+        String json = Jsonification.enChaine(objetJson);
+
+        outState.putInt("__hauteur", Integer.parseInt(json));
+        outState.putInt("__largeur", Integer.parseInt(json));
+        outState.putInt("__pourGagner", Integer.parseInt(json));
+
+
+
         creerLog("onSaveInstanceState");
     }
 
@@ -62,6 +86,15 @@ public class AParametres extends Activite {
     protected void onDestroy(){
         super.onDestroy();
         creerLog("onDestroy");
+    }
+
+
+    private void restaurerParametres( Bundle savedInstanceState){
+
+    }
+
+    private void sauvegarderParametres( Bundle outState){
+
     }
 
 

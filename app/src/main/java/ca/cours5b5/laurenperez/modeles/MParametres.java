@@ -6,6 +6,7 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.Serialisation.AttributSerialisable;
@@ -17,24 +18,25 @@ public class MParametres extends Modele {
 
     @AttributSerialisable
     public Integer hauteur;
+    private final String __hauteur = "hauteur";
 
     @AttributSerialisable
     public Integer largeur;
+    private final String __largeur = "largeur";
 
     @AttributSerialisable
     public Integer pourGagner;
+    private final String __pourGagner = "pourGagner";
 
-
-
-    private List<Integer> choixHauteur;
+   private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
 
+
+
     public MParametres(){
 
-        genererListesChoix();
-
-
+       // genererListesChoix();
 
     }
 
@@ -50,7 +52,17 @@ public class MParametres extends Modele {
         return choixPourGagner;
     }
 
-    public Integer getHauteur() {
+    @Override
+    public void aPartirObjetJson(Map<String, Object> objetJson) {
+
+    }
+
+    @Override
+    public Map<String, Object> enObjetJson() {
+        return null;
+    }
+
+    /*public Integer getHauteur() {
         return hauteur;
     }
 
@@ -111,9 +123,11 @@ public class MParametres extends Modele {
     private void genererListeChoixPourGagner(){
 
         choixPourGagner = genererListeChoix(GConstantes.MIN_POURGAGNER, GConstantes.MAX_POURGAGNER);
-
+*/
 
     }
 
 
-}
+
+
+//}

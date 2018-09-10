@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 
-public class VMenuPrincipal extends Vue2 {
+public class VMenuPrincipal extends Vue {
 
     static{
         Log.d("atelier04", VMenuPrincipal.class.getSimpleName()+ ":static");
