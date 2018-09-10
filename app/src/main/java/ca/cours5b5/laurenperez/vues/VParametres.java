@@ -1,8 +1,6 @@
 package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -12,7 +10,7 @@ import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.activites.AParametres;
 import ca.cours5b5.laurenperez.modeles.MParametres;
 
-public class VParametres  extends ConstraintLayout implements Vue{
+public class VParametres  extends Vue {
 
 
     private Spinner spinnerHauteur, spinnerLargeur, spinnerPourGagner ;
