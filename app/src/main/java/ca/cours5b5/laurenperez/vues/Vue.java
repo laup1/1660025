@@ -3,22 +3,17 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
-public abstract class Vue extends ConstraintLayout {
-    public Vue(Context context) {
-        super(context);
-    }
+import ca.cours5b5.laurenperez.R;
 
-    public Vue(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+public interface Vue  {
 
-    public Vue(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
 
-    public void creerLog(String nomMethode){
-        Log.d("atelier04", this.getClass().getSimpleName() + ":"+ nomMethode);
-    }
+
+
+
+
+
 }
