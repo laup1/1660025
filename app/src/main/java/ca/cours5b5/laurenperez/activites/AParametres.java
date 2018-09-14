@@ -3,7 +3,11 @@ package ca.cours5b5.laurenperez.activites;
 
 import android.os.Bundle;
 import android.util.Log;
+
+import com.google.gson.Gson;
+
 import java.util.Map;
+import java.util.logging.Logger;
 
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.Serialisation.Jsonification;
@@ -13,8 +17,8 @@ import ca.cours5b5.laurenperez.vues.VParametres;
 public class AParametres extends Activite {
 
 
-    private  VParametres parametres = new VParametres(this);
-    private  MParametres modele = new MParametres();
+    private  VParametres parametres ;
+
 
 
     static{
@@ -26,22 +30,11 @@ public class AParametres extends Activite {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parametres);
+        parametres = new VParametres(this);
 
         if(savedInstanceState != null) {
-
-            Map<String, Object> objetJson = modele.enObjetJson();
-
-            for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
-
-                String cle = entry.getKey();
-                Object valeur = entry.getValue();
-                String json = savedInstanceState.getString(cle);
-
-
-            }
+            restaurerParametres(savedInstanceState);
         }
-
-
 
         creerLog("onCreate");
         Log.d("log", this.getResources().getString(R.string.hello_world));
@@ -49,6 +42,44 @@ public class AParametres extends Activite {
 
 
     }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        sauvegarderParametres(outState);
+
+
+
+
+
+
+        creerLog("onSaveInstanceState");
+    }
+
+
+    private void restaurerParametres( Bundle savedInstanceState){
+
+        String json = savedInstanceState.getString("MParametres");
+        Map<String,Object> objetJson =  Jsonification.enObjetJson(json);
+        MParametres.instance.aPartirObjetJson(objetJson);
+        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, clé: MParametres");
+        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, json:" + objetJson.toString());
+
+
+    }
+
+    private void sauvegarderParametres( Bundle outState){
+
+        Map<String, Object> objetJson = MParametres.instance.enObjetJson();
+
+        String json = Jsonification.enChaine(objetJson);
+
+        outState.putString("MParametres", json);
+        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, clé: MParametres");
+        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, json:" + objetJson.toString());
+
+    }
+
 
     @Override
     protected void onResume(){
@@ -63,41 +94,11 @@ public class AParametres extends Activite {
 
         }
 
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-
-        Map<String, Object> objetJson = modele.enObjetJson();
-
-        String json = Jsonification.enChaine(objetJson);
-
-        outState.putInt("__hauteur", Integer.parseInt(json));
-        outState.putInt("__largeur", Integer.parseInt(json));
-        outState.putInt("__pourGagner", Integer.parseInt(json));
-
-
-
-        creerLog("onSaveInstanceState");
-    }
-
     @Override
     protected void onDestroy(){
         super.onDestroy();
         creerLog("onDestroy");
     }
-
-
-    private void restaurerParametres( Bundle savedInstanceState){
-
-    }
-
-    private void sauvegarderParametres( Bundle outState){
-
-    }
-
-
 
 
 }
