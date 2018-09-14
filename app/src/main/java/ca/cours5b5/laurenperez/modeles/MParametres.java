@@ -1,98 +1,81 @@
 package ca.cours5b5.laurenperez.modeles;
 
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-
-
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.Serialisation.AttributSerialisable;
+import ca.cours5b5.laurenperez.Serialisation.Jsonification;
 import ca.cours5b5.laurenperez.global.GConstantes;
+
 
 public class MParametres extends Modele {
 
-    public static MParametres instance;
+    public static MParametres instance = new MParametres();
 
     @AttributSerialisable
-    public Integer hauteur;
+    public Integer hauteur = GConstantes.DEFAULT_HAUTEUR;
     private final String __hauteur = "hauteur";
 
     @AttributSerialisable
-    public Integer largeur;
+    public Integer largeur = GConstantes.DEFAULT_LARGEUR;
     private final String __largeur = "largeur";
 
     @AttributSerialisable
-    public Integer pourGagner;
+    public Integer pourGagner = GConstantes.DEFAULT_POURGAGNER;
     private final String __pourGagner = "pourGagner";
-
-   private List<Integer> choixHauteur;
-    private List<Integer> choixLargeur;
-    private List<Integer> choixPourGagner;
-
-
 
     public MParametres(){
 
-       // genererListesChoix();
-
+       getChoixHauteur();
+       getChoixLargeur();
+       getChoixLargeur();
     }
 
-    public List<Integer> getChoixHauteur() {
-        return choixHauteur;
-    }
 
-    public List<Integer> getChoixLargeur() {
-        return choixLargeur;
-    }
-
-    public List<Integer> getChoixPourGagner() {
-        return choixPourGagner;
-    }
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) {
+    //charge les données du modèle à partir d'une sauvegarde en objetJson
+
+        for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
+
+            String cle = entry.getKey();
+            Object valeur = entry.getValue();
+
+            if(cle.equals(__hauteur)) {
+                hauteur = Integer.valueOf((String) valeur);
+            } else if(cle.equals(__largeur)){
+                largeur = Integer.valueOf((String) valeur);
+            }else{
+                pourGagner = Integer.valueOf((String) valeur);
+            }
+
+
+        }
+
+
 
     }
 
     @Override
     public Map<String, Object> enObjetJson() {
-        return null;
-    }
+    //retoure une sauvegarde des données du modèle
 
-    /*public Integer getHauteur() {
-        return hauteur;
-    }
+        Map<String, Object> objetJson = new HashMap<>();
+        objetJson.put(__hauteur, hauteur.toString());
+        objetJson.put(__largeur, largeur.toString());
+        objetJson.put(__pourGagner, pourGagner.toString());
+        return objetJson;
 
-    public Integer getLargeur() {
-        return largeur;
-    }
 
-    public Integer getPourGagner() {
-        return pourGagner;
-    }
 
-    public void setHauteur(Integer hauteur) {
-        this.hauteur = hauteur;
-    }
-
-    public void setLargeur(Integer largeur) {
-        this.largeur = largeur;
-    }
-
-    public void setPourGagner(Integer pourGagner) {
-        this.pourGagner = pourGagner;
-    }
-
-    private void genererListesChoix(){
-
-        genererListeChoixHauteur();
-        genererListeChoixLargeur();
-        genererListeChoixPourGagner();
 
     }
+
+
+
 
     private List<Integer> genererListeChoix(int min, int max){
 
@@ -107,27 +90,27 @@ public class MParametres extends Modele {
 
     }
 
-    private void genererListeChoixHauteur(){
+    public List<Integer> getChoixHauteur(){
 
-       choixHauteur = genererListeChoix(GConstantes.MIN_HAUTEUR,GConstantes.MAX_HAUTEUR);
+       return genererListeChoix(GConstantes.MIN_HAUTEUR,GConstantes.MAX_HAUTEUR);
 
 
 
     }
-    private void genererListeChoixLargeur(){
+    public List<Integer> getChoixLargeur(){
 
-        choixLargeur = genererListeChoix(GConstantes.MIN_LARGEUR,GConstantes.MAX_LARGEUR);
+        return  genererListeChoix(GConstantes.MIN_LARGEUR,GConstantes.MAX_LARGEUR);
 
 
     }
-    private void genererListeChoixPourGagner(){
+    public List<Integer> getChoixPourGagner(){
 
-        choixPourGagner = genererListeChoix(GConstantes.MIN_POURGAGNER, GConstantes.MAX_POURGAGNER);
-*/
+       return genererListeChoix(GConstantes.MIN_POURGAGNER, GConstantes.MAX_POURGAGNER);
+
 
     }
 
 
 
 
-//}
+}
