@@ -11,8 +11,18 @@
         android:id="@+id/buttonMenuPrincipal"
         android:layout_width="122dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="194dp"
+        android:layout_marginTop="364dp"
         android:text="@string/buttonMenuPrincipal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="95dp"
+        android:text="@string/jouer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
