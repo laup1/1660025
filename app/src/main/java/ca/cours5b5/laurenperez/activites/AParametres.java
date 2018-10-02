@@ -61,7 +61,7 @@ public class AParametres extends Activite {
 
         String json = savedInstanceState.getString("MParametres");
         Map<String,Object> objetJson =  Jsonification.enObjetJson(json);
-        MParametres.instance.aPartirObjetJson(objetJson);
+        MParametres.instance.getParametresPartie().aPartirObjetJson(objetJson);
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, clé: MParametres");
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, json:" + objetJson.toString());
 
@@ -70,7 +70,7 @@ public class AParametres extends Activite {
 
     private void sauvegarderParametres( Bundle outState){
 
-        Map<String, Object> objetJson = MParametres.instance.enObjetJson();
+        Map<String, Object> objetJson = MParametres.instance.getParametresPartie().enObjetJson();
 
         String json = Jsonification.enChaine(objetJson);
 

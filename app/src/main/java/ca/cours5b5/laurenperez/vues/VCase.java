@@ -3,10 +3,15 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 public class VCase extends AppCompatButton {
 
+    public TextView getCases() {
+        return cases;
+    }
 
+    public TextView cases;
     public VCase(Context context) {
         super(context);
     }
@@ -20,7 +25,11 @@ public class VCase extends AppCompatButton {
     }
 
     public VCase(Context context, int rangee, int colonne) {
-        super(context, rangee, colonne);
+        super(context);
+
+        cases = new TextView(context );
+        cases.setText(rangee + "," + colonne);
+
 
     }
 

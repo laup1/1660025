@@ -5,4 +5,6 @@
     <string name="pourGagner">Pour gagner</string>
     <string name="buttonMenuPrincipal">Paramètres</string>
     <string name="jouer">Jouer</string>
+    <string name="joueur1">Joueur1</string>
+    <string name="joueur2">Joueur2</string>
 </resources>

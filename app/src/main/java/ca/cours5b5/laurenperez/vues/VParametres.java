@@ -55,15 +55,15 @@ public class VParametres extends Vue {
         ArrayAdapter<Integer> adapterPourGagner = new ArrayAdapter<Integer>(super.getContext(), android.R.layout.simple_spinner_dropdown_item);
         spinnerPourGagner.setAdapter(adapterPourGagner);
 
-        refreshSpinner(spinnerHauteur, MParametres.instance.hauteur, MParametres.instance.getChoixLargeur());
-        refreshSpinner(spinnerLargeur, MParametres.instance.largeur, MParametres.instance.getChoixHauteur());
-        refreshSpinner(spinnerPourGagner, MParametres.instance.pourGagner, MParametres.instance.getChoixPourGagner());
+        refreshSpinner(spinnerHauteur, MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getChoixHauteur());
+        refreshSpinner(spinnerLargeur, MParametres.instance.getParametresPartie().getLargeur(), MParametres.instance.getChoixLargeur());
+        refreshSpinner(spinnerPourGagner, MParametres.instance.getParametresPartie().getPourGagner(), MParametres.instance.getChoixPourGagner());
 
 
         spinnerHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MParametres.instance.hauteur = (Integer) parent.getAdapter().getItem(position);
+                MParametres.instance.getParametresPartie().hauteur =  (Integer) parent.getAdapter().getItem(position);
             }
 
             @Override
@@ -75,7 +75,7 @@ public class VParametres extends Vue {
         spinnerLargeur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MParametres.instance.largeur = (Integer) parent.getAdapter().getItem(position);
+                MParametres.instance.getParametresPartie().largeur = (Integer) parent.getAdapter().getItem(position);
             }
 
             @Override
@@ -87,7 +87,7 @@ public class VParametres extends Vue {
         spinnerPourGagner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                MParametres.instance.pourGagner = (Integer) parent.getAdapter().getItem(position);
+                MParametres.instance.getParametresPartie().pourGagner = (Integer) parent.getAdapter().getItem(position);
             }
 
             @Override

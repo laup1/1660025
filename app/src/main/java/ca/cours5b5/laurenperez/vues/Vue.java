@@ -16,6 +16,7 @@ public abstract class Vue extends ConstraintLayout {
     }
 
     public Vue(Context context, AttributeSet attrs) {
+
         super(context, attrs);
     }
 

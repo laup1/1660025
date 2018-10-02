@@ -31,6 +31,16 @@ public class AMenuPrincipal extends Activite {
             }
         });
 
+        Button boutonJouer = this.findViewById(R.id.button);
+        boutonJouer.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent vueMPartie = new Intent(AMenuPrincipal.this, APartie.class);
+                AMenuPrincipal.this.startActivity(vueMPartie);
+            }
+        });
+
     }
 
     @Override

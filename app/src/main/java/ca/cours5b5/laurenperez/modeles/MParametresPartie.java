@@ -23,22 +23,45 @@ public class MParametresPartie extends Modele {
 
     public static MParametresPartie aPartirMParametres(MParametres mParametres){
 
-         MParametresPartie instanceMParametresPartie = mParametres.getParametresPartie();
+         MParametresPartie instanceMParametresPartie = mParametres.getParametresPartie().cloner();
+
 
          return instanceMParametresPartie;
     }
 
+    public MParametresPartie cloner(){
+
+        MParametresPartie partieClone = new MParametresPartie(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur(), MParametres.instance.getParametresPartie().getPourGagner());
+
+        return partieClone;
+
+    }
     public MParametresPartie(){
 
-        hauteur = GConstantes.DEFAULT_HAUTEUR;
-        largeur = GConstantes.DEFAULT_LARGEUR;
-        pourGagner = GConstantes.DEFAULT_POURGAGNER;
+
+
+            hauteur = GConstantes.DEFAULT_HAUTEUR;
+            largeur = GConstantes.DEFAULT_LARGEUR;
+            pourGagner = GConstantes.DEFAULT_POURGAGNER;
+
+
+
+
+
+
+    }
+    public MParametresPartie(int hauteur, int largeur, int pourGagner){
+
+        this.hauteur = hauteur;
+        this.largeur = largeur;
+        this.pourGagner = pourGagner;
 
 
     }
 
+
     public Integer getHauteur() {
-        return largeur;
+        return hauteur;
     }
     public Integer getLargeur() {
         return largeur;

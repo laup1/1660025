@@ -9,9 +9,6 @@ import ca.cours5b5.laurenperez.Serialisation.AttributSerialisable;
 import ca.cours5b5.laurenperez.exceptions.ErreurDeSerialisation;
 import ca.cours5b5.laurenperez.global.GConstantes;
 
-
-
-
 public class MParametres extends Modele {
 
     public static MParametres instance = new MParametres();
@@ -26,8 +23,9 @@ public class MParametres extends Modele {
 
     public MParametres(){
 
-      genererListesDeChoix();
+
       parametresPartie = new MParametresPartie();
+      genererListesDeChoix();
     }
 
     public List<Integer> getChoixHauteur(){
@@ -43,12 +41,14 @@ public class MParametres extends Modele {
     }
 
     public MParametresPartie getParametresPartie() {
+
         return parametresPartie;
     }
 
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurDeSerialisation{
     //charge les données du modèle à partir d'une sauvegarde en objetJson
+        parametresPartie.aPartirObjetJson(objetJson);
 
 
 
@@ -60,8 +60,7 @@ public class MParametres extends Modele {
     //retoure une sauvegarde des données du modèle
 
 
-
-return null;
+    return  parametresPartie.enObjetJson();
 
 
     }
@@ -79,9 +78,9 @@ return null;
 
     }
     private void genererListesDeChoix(){
-        getChoixHauteur();
-        getChoixLargeur();
-        getChoixPourGagner();
+        choixHauteur = genererChoixHauteur();
+        choixLargeur = genererChoixLargeur();
+        choixPourGagner = genererChoixPourGagner();
     }
 
     public List<Integer> genererChoixHauteur(){

@@ -20,7 +20,7 @@ public class ControleurObservation {
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
 
 
-            observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())?MParametres.instance : partie), listenerObservateur);
+            observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie), listenerObservateur);
             lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())?MParametres.instance : partie));
 
     }
