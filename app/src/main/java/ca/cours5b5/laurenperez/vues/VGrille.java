@@ -72,8 +72,7 @@ public class VGrille extends GridLayout {
 
     void creerGrille(int hauteur, int largeur){
 
-         grille = (GridLayout) super.findViewById(R.id.gridLayout);
-
+         grille = super.findViewById(R.id.gridLayout3);
          grille.setRowCount(hauteur);
          grille.setColumnCount(largeur);
 

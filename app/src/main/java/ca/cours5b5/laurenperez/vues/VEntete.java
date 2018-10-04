@@ -5,6 +5,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.GridLayout;
 import android.util.AttributeSet;
 import android.view.Gravity;
+import android.widget.Button;
 import android.widget.TextView;
 
 import ca.cours5b5.laurenperez.R;
@@ -24,17 +25,17 @@ public class VEntete extends AppCompatButton {
 
     private int colonne;
 
-    public TextView getEntete() {
+    public Button getEntete() {
         return entete;
     }
 
-    TextView entete;
+    Button entete;
 
      public VEntete(Context context, int colonne){
          super(context);
          this.colonne = colonne;
 
-             entete = new TextView(context);
+             entete = new Button(context);
              entete.setText(colonne);
 
 

@@ -15,7 +15,7 @@ import ca.cours5b5.laurenperez.modeles.Modele;
 public class VPartie extends Vue {
 
     private VGrille grille;
-    GridLayout grilleLayout;
+
 
     public VPartie(Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class VPartie extends Vue {
     protected  void onFinishInflate(){
         super.onFinishInflate();
         initialiser();
-        GridLayout grilleLayout = (GridLayout) super.findViewById(R.id.gridLayout3);
+        GridLayout grilleLayout = findViewById(R.id.gridLayout3);
         grilleLayout.addView(grille);
 
 
