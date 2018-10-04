@@ -8,11 +8,9 @@ import android.widget.TextView;
 
 public class VCase extends AppCompatButton {
 
-    public Button getCases() {
-        return cases;
-    }
 
-    public Button cases;
+
+
     public VCase(Context context) {
         super(context);
     }
@@ -28,8 +26,8 @@ public class VCase extends AppCompatButton {
     public VCase(Context context, int rangee, int colonne) {
         super(context);
 
-        cases = new Button(context );
-        cases.setText(rangee + "," + colonne);
+
+        this.setText(rangee + "," + colonne);
 
 
     }

@@ -25,18 +25,14 @@ public class VEntete extends AppCompatButton {
 
     private int colonne;
 
-    public Button getEntete() {
-        return entete;
-    }
 
-    Button entete;
 
      public VEntete(Context context, int colonne){
          super(context);
          this.colonne = colonne;
 
-             entete = new Button(context);
-             entete.setText(colonne);
+
+             this.setText(String.valueOf(colonne));
 
 
 

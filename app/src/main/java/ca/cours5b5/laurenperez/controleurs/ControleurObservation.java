@@ -1,5 +1,7 @@
 package ca.cours5b5.laurenperez.controleurs;
 
+import android.util.ArrayMap;
+
 import java.util.Map;
 
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
@@ -9,7 +11,7 @@ import ca.cours5b5.laurenperez.modeles.Modele;
 
 public class ControleurObservation {
 
-    private static Map<Modele, ListenerObservateur> observations;
+    private static Map<Modele, ListenerObservateur> observations = new ArrayMap<>();
 
     private static MPartie partie;
 
@@ -19,9 +21,10 @@ public class ControleurObservation {
 
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
 
+            partie = new MPartie(MParametres.instance.getParametresPartie().cloner());
 
             observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie), listenerObservateur);
-            lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())?MParametres.instance : partie));
+            lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie));
 
     }
 

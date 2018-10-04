@@ -35,10 +35,10 @@ public class VGrille extends GridLayout {
     private int nombreRanges;
 
     public GridLayout getGrille() {
-        return grille;
+        return this;
     }
 
-    public GridLayout grille;
+
 
 
     private class Colonne extends ArrayList<VCase>{
@@ -72,9 +72,9 @@ public class VGrille extends GridLayout {
 
     void creerGrille(int hauteur, int largeur){
 
-         grille = super.findViewById(R.id.gridLayout3);
-         grille.setRowCount(hauteur);
-         grille.setColumnCount(largeur);
+         super.findViewById(R.id.gridLayout3);
+        // grille.setRowCount(hauteur);
+        // grille.setColumnCount(largeur);
 
          nombreRanges = hauteur;
          initialiserColonnes(largeur);
@@ -97,7 +97,7 @@ public class VGrille extends GridLayout {
 
             VEntete entete = new VEntete(super.getContext(), i);
             entetes.add(entete);
-            grille.addView(entete , getMiseEnPageEntete(largeur));
+            addView(entete , getMiseEnPageEntete(i));
 
         }
 
@@ -105,7 +105,7 @@ public class VGrille extends GridLayout {
 
     private LayoutParams getMiseEnPageEntete(int colonne){
 
-        LayoutParams mesParams = (LayoutParams) grille.getLayoutParams();
+        LayoutParams mesParams = new LayoutParams();
         mesParams.width = 0;
         mesParams.height = 0;
         mesParams.setGravity(Gravity.FILL);
@@ -134,7 +134,7 @@ public class VGrille extends GridLayout {
             for (int j=0; j<largeur; j++){
                 VCase cases = new VCase(super.getContext(),hauteur,largeur);
                 colonnesDeCases.add(cases);
-                grille.addView(cases, getMiseEnPageCase(hauteur,largeur));
+                addView(cases, getMiseEnPageCase(j,i));
             }
         }
 
@@ -142,7 +142,7 @@ public class VGrille extends GridLayout {
 
     private LayoutParams getMiseEnPageCase(int rangee, int colonne){
 
-        LayoutParams mesParams = (LayoutParams) grille.getLayoutParams();
+        LayoutParams mesParams = new LayoutParams();
         mesParams.width = 0;
         mesParams.height = 0;
         mesParams.setGravity(Gravity.FILL);

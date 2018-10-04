@@ -21,8 +21,8 @@ public class APartie extends Activite {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_apartie);
         partie = new VPartie(this);
+       setContentView(R.layout.activity_apartie);
 
         if(savedInstanceState != null) {
             restaurerParametres(savedInstanceState);
@@ -46,7 +46,7 @@ public class APartie extends Activite {
 
         String json = savedInstanceState.getString("MPartie");
         Map<String,Object> objetJson =  Jsonification.enObjetJson(json);
-        MParametres.instance.getParametresPartie().aPartirObjetJson(objetJson);
+        MParametresPartie.aPartirMParametres(MParametres.instance );
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, clé: MPartie");
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, json:" + objetJson.toString());
 
