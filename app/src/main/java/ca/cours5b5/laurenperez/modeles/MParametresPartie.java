@@ -37,9 +37,6 @@ public class MParametresPartie extends Modele {
 
     }
     public MParametresPartie(){
-
-
-
             hauteur = GConstantes.DEFAULT_HAUTEUR;
             largeur = GConstantes.DEFAULT_LARGEUR;
             pourGagner = GConstantes.DEFAULT_POURGAGNER;

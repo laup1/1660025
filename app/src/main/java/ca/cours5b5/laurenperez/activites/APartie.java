@@ -20,13 +20,18 @@ public class APartie extends Activite {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
         partie = new VPartie(this);
-       setContentView(R.layout.activity_apartie);
+        setContentView(R.layout.activity_apartie);
+
+
+
 
         if(savedInstanceState != null) {
             restaurerParametres(savedInstanceState);
         }
+
+
+
     }
 
     @Override

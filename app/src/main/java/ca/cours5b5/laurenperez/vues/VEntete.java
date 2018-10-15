@@ -31,8 +31,7 @@ public class VEntete extends AppCompatButton {
          super(context);
          this.colonne = colonne;
 
-
-             this.setText(String.valueOf(colonne));
+         setText(String.valueOf(colonne));
 
 
 

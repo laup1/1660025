@@ -2,14 +2,11 @@ package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.GridLayout;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
 import ca.cours5b5.laurenperez.modeles.MParametres;
@@ -34,7 +31,7 @@ public class VGrille extends GridLayout {
     }
     private int nombreRanges;
 
-    public GridLayout getGrille() {
+    public VGrille getGrille() {
         return this;
     }
 
@@ -58,8 +55,9 @@ public class VGrille extends GridLayout {
     @Override
     protected void onFinishInflate(){
         super.onFinishInflate();
-        initialiser(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur());
 
+        //initialiser(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur());
+        //getGrille();
 
     }
 
@@ -72,14 +70,14 @@ public class VGrille extends GridLayout {
 
     void creerGrille(int hauteur, int largeur){
 
-         super.findViewById(R.id.gridLayout3);
-        // grille.setRowCount(hauteur);
-        // grille.setColumnCount(largeur);
+       // this.findViewById(R.id.vgrille);
+         //this.setRowCount(hauteur);
+        //this.setColumnCount(largeur);
 
          nombreRanges = hauteur;
          initialiserColonnes(largeur);
          ajouterEnTetes(largeur);
-        ajouterCases(hauteur, largeur);
+       ajouterCases(hauteur, largeur);
 
 
 
@@ -93,11 +91,12 @@ public class VGrille extends GridLayout {
 
     private void ajouterEnTetes(int largeur){
 
-        for(int i = 0; i <largeur; i++){
+        for(int i = 0; i < largeur; i++){
 
             VEntete entete = new VEntete(super.getContext(), i);
             entetes.add(entete);
             addView(entete , getMiseEnPageEntete(i));
+            Log.d("atelier06", String.valueOf(i));
 
         }
 
@@ -130,11 +129,12 @@ public class VGrille extends GridLayout {
 
     private void ajouterCases(int hauteur, int largeur){
 
-        for (int i =0; i< hauteur; i++){
-            for (int j=0; j<largeur; j++){
-                VCase cases = new VCase(super.getContext(),hauteur,largeur);
+        for (int i =0; i< largeur; i++){
+            for (int j=1; j<hauteur+1; j++){
+                VCase cases = new VCase(super.getContext(),i,j);
                 colonnesDeCases.add(cases);
-                addView(cases, getMiseEnPageCase(j,i));
+                addView(cases, getMiseEnPageCase(i,j));
+                Log.d("atelier06", "cases" + i + j);
             }
         }
 

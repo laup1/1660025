@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 public class VCase extends AppCompatButton {
 
-
-
-
     public VCase(Context context) {
         super(context);
     }
