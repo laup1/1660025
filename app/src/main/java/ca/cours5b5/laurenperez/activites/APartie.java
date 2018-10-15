@@ -20,17 +20,13 @@ public class APartie extends Activite {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        partie = new VPartie(this);
         setContentView(R.layout.activity_apartie);
-
-
+        partie = new VPartie(this);
 
 
         if(savedInstanceState != null) {
             restaurerParametres(savedInstanceState);
         }
-
-
 
     }
 
@@ -38,11 +34,6 @@ public class APartie extends Activite {
     protected void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
         sauvegarderParametres(outState);
-
-
-
-
-
 
         creerLog("onSaveInstanceState");
     }

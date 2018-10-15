@@ -29,23 +29,15 @@ public class VPartie extends Vue {
         super(context, attrs, defStyleAttr);
     }
     private VGrille grille;
+
     @Override
     protected  void onFinishInflate(){
         super.onFinishInflate();
         Log.d("atelier06", "VPartie.onFinishInflate");
 
         grille = findViewById(R.id.vgrille);
-        //Button bu = new Button(this.getContext());
-         //bu.setText("iii");
 
-       // grille.addView(bu );
-       // VCase gr = new VCase(this.getContext(), 0,1);
-        //grille.addView(gr);
-        initialiser();
-
-
-
-
+       initialiser();
     }
 
     private void initialiser(){
@@ -63,10 +55,8 @@ public class VPartie extends Vue {
             @Override
             public void reagirChangementAuModele(Modele modele) {
 
-
                 initialiserGrille(getPartie(modele));
                 Log.d("atelier06", "VPartie.reagir");
-
 
 
             }
@@ -83,7 +73,9 @@ public class VPartie extends Vue {
 
     private void initialiserGrille(MPartie partie){
 
-        grille.initialiser(partie.getParametres().getHauteur(), partie.getParametres().getLargeur());
+        MParametresPartie parametresPartie = partie.getParametres();
+
+        grille.creerGrille(parametresPartie.getHauteur(), parametresPartie.getLargeur());
 
     }
 

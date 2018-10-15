@@ -56,28 +56,27 @@ public class VGrille extends GridLayout {
     protected void onFinishInflate(){
         super.onFinishInflate();
 
-        //initialiser(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur());
-        //getGrille();
 
     }
 
-    public void initialiser(int hauteur, int largeur){
+    public void initialiser(){
 
-        creerGrille(hauteur, largeur);
+       // findViewById(R.id.vgrille);
+       // creerGrille(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur());
+        entetes = new ArrayList<>();
 
 
     }
 
     void creerGrille(int hauteur, int largeur){
 
-       // this.findViewById(R.id.vgrille);
-         //this.setRowCount(hauteur);
-        //this.setColumnCount(largeur);
+
 
          nombreRanges = hauteur;
+         initialiser();
          initialiserColonnes(largeur);
          ajouterEnTetes(largeur);
-       ajouterCases(hauteur, largeur);
+        ajouterCases(hauteur, largeur);
 
 
 
@@ -86,16 +85,16 @@ public class VGrille extends GridLayout {
     private void initialiserColonnes(int largeur){
 
         colonnesDeCases = new ArrayList<>(largeur);
-        entetes = new ArrayList<VEntete>();
+
     }
 
     private void ajouterEnTetes(int largeur){
 
         for(int i = 0; i < largeur; i++){
 
-            VEntete entete = new VEntete(super.getContext(), i);
+            VEntete entete = new VEntete( super.getContext(), i);
             entetes.add(entete);
-            addView(entete , getMiseEnPageEntete(i));
+            this.addView(entete , getMiseEnPageEntete(i));
             Log.d("atelier06", String.valueOf(i));
 
         }
@@ -113,11 +112,10 @@ public class VGrille extends GridLayout {
 
          int rangee = 0;
 
-         float poidsRangee = 0,
-                poidsColonne = 3;
 
-        Spec specRangee = GridLayout.spec(rangee, poidsRangee);
-        Spec specColonne = GridLayout.spec(colonne, poidsColonne);
+
+        Spec specRangee = GridLayout.spec(rangee, 1.0f);
+        Spec specColonne = GridLayout.spec(colonne, 3.0f);
 
         mesParams.columnSpec = specColonne;
         mesParams.rowSpec = specRangee;
@@ -129,12 +127,26 @@ public class VGrille extends GridLayout {
 
     private void ajouterCases(int hauteur, int largeur){
 
-        for (int i =0; i< largeur; i++){
-            for (int j=1; j<hauteur+1; j++){
-                VCase cases = new VCase(super.getContext(),i,j);
+        for (int i = 0; i < largeur ; i++){
+
+            int j1 = 0;
+            int i1 = 0;
+
+            for (int j=0; j< hauteur ; j++){
+
+                j1 = hauteur - j - 1;
+                i1 = i;
+
+                VCase cases = new VCase(super.getContext(),j1, i1);
+
                 colonnesDeCases.add(cases);
-                addView(cases, getMiseEnPageCase(i,j));
+
+                addView(cases, getMiseEnPageCase(j, i ));
+
                 Log.d("atelier06", "cases" + i + j);
+
+                j1--;
+                i1++;
             }
         }
 
@@ -149,11 +161,10 @@ public class VGrille extends GridLayout {
         mesParams.rightMargin = 5;
         mesParams.leftMargin = 5;
         
-        float poidsRangee = 0,
-                poidsColonne = 0;
 
-        Spec specRangee = GridLayout.spec(rangee, poidsRangee);
-        Spec specColonne = GridLayout.spec(colonne, poidsColonne);
+
+        Spec specRangee = GridLayout.spec(rangee +1, 1.0f);
+        Spec specColonne = GridLayout.spec(colonne, 1.0f);
         mesParams.columnSpec = specColonne;
         mesParams.rowSpec = specRangee;
 

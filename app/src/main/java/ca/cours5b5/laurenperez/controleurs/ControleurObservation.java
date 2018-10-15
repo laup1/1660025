@@ -23,9 +23,23 @@ public class ControleurObservation {
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
 
             partie = new MPartie(MParametres.instance.getParametresPartie().cloner());
-            observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie), listenerObservateur);
-            lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie));
-        Log.d("atelier06", "ControleurObservation.observerModele");
+            //observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie), listenerObservateur);
+            //lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie));
+
+            if(nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())) {
+                observations.put(MParametres.instance, listenerObservateur);
+                lancerObservation( MParametres.instance );
+
+
+
+            } else {
+
+                observations.put(partie, listenerObservateur);
+                lancerObservation( partie );
+
+            }
+
+            Log.d("atelier06", "ControleurObservation.observerModele");
     }
 
 
