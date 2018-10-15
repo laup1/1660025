@@ -55,7 +55,7 @@ public class APartie extends Activite {
 
         String json = Jsonification.enChaine(objetJson);
 
-        outState.putString("MParametres", json);
+        outState.putString("MPartie", json);
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, clé: MPartie");
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, json:" + objetJson.toString());
 

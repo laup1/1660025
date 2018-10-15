@@ -2,6 +2,7 @@ package ca.cours5b5.laurenperez.modeles;
 
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,14 @@ public class MParametres extends Modele {
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurDeSerialisation{
     //charge les données du modèle à partir d'une sauvegarde en objetJson
-        parametresPartie.aPartirObjetJson(objetJson);
+        for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
+            String cle = entry.getKey();
+            Object valeur = entry.getValue();
+
+            if (cle.equals(__parametresPartie)) {
+                parametresPartie.aPartirObjetJson((Map<String, Object>) valeur);
+            }
+        }
 
 
 
@@ -59,8 +67,11 @@ public class MParametres extends Modele {
     public Map<String, Object> enObjetJson() throws ErreurDeSerialisation{
     //retoure une sauvegarde des données du modèle
 
+            Map<String, Object> objetJson = new HashMap<>();
+            objetJson.put(this.__parametresPartie, this.__parametresPartie);
+            return objetJson;
 
-    return  parametresPartie.enObjetJson();
+
 
 
     }
