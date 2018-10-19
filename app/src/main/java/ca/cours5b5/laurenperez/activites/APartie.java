@@ -8,6 +8,7 @@ import java.util.Map;
 
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.Serialisation.Jsonification;
+import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
 import ca.cours5b5.laurenperez.modeles.MParametres;
 import ca.cours5b5.laurenperez.modeles.MParametresPartie;
 import ca.cours5b5.laurenperez.vues.VParametres;
@@ -42,7 +43,7 @@ public class APartie extends Activite {
 
         String json = savedInstanceState.getString("MPartie");
         Map<String,Object> objetJson =  Jsonification.enObjetJson(json);
-        MParametresPartie.aPartirMParametres(MParametres.instance );
+        ControleurObservation.partie.aPartirObjetJson(objetJson);
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, clé: MPartie");
         Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, json:" + objetJson.toString());
 
@@ -51,7 +52,7 @@ public class APartie extends Activite {
 
     private void sauvegarderParametres( Bundle outState){
 
-        Map<String, Object> objetJson = MParametres.instance.enObjetJson();
+        Map<String, Object> objetJson = ControleurObservation.partie.enObjetJson();
 
         String json = Jsonification.enChaine(objetJson);
 

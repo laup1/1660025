@@ -15,7 +15,7 @@ public class ControleurObservation {
 
     private static Map<Modele, ListenerObservateur> observations = new ArrayMap<>();
 
-    private static MPartie partie;
+    public static MPartie partie;
 
     static{
 
@@ -30,13 +30,11 @@ public class ControleurObservation {
 
             if(nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())) {
                 modele = MParametres.instance;
-                //observations.put(MParametres.instance, listenerObservateur);
-                //lancerObservation(MParametres.instance);
+
 
             } else {
                 modele = ControleurObservation.partie;
-                //observations.put(ControleurObservation.partie, listenerObservateur);
-               // lancerObservation(ControleurObservation.partie);
+
 
             }
 
