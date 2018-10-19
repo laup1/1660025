@@ -7,6 +7,7 @@ import java.util.Map;
 
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.laurenperez.modeles.MParametres;
+import ca.cours5b5.laurenperez.modeles.MParametresPartie;
 import ca.cours5b5.laurenperez.modeles.MPartie;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
@@ -23,29 +24,40 @@ public class ControleurObservation {
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
 
             partie = new MPartie(MParametres.instance.getParametresPartie().cloner());
-            //observations.put((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie), listenerObservateur);
-            //lancerObservation((nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())? MParametres.instance : partie));
+
+            Modele modele;
+
 
             if(nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())) {
-                observations.put(MParametres.instance, listenerObservateur);
-                lancerObservation( MParametres.instance );
-
-
+                modele = MParametres.instance;
+                //observations.put(MParametres.instance, listenerObservateur);
+                //lancerObservation(MParametres.instance);
 
             } else {
-
-                observations.put(partie, listenerObservateur);
-                lancerObservation( partie );
+                modele = ControleurObservation.partie;
+                //observations.put(ControleurObservation.partie, listenerObservateur);
+               // lancerObservation(ControleurObservation.partie);
 
             }
 
-            Log.d("atelier06", "ControleurObservation.observerModele");
+        observations.put(modele, listenerObservateur);
+         lancerObservation(modele);
+
+
+
+
+        Log.d("atelier06", "ControleurObservation.observerModele");
     }
 
 
     public static void lancerObservation(Modele modele){
 
-      observations.get(modele).reagirNouveauModele(modele);
+
+        ListenerObservateur listenerObservateur = observations.get(modele);
+
+        if(listenerObservateur != null )
+
+            listenerObservateur.reagirNouveauModele(modele);
 
     }
 }

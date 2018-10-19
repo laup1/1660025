@@ -52,15 +52,25 @@ public class VPartie extends Vue {
 
         ControleurObservation.observerModele(MPartie.class.getSimpleName(), new ListenerObservateur() {
 
+
             @Override
             public void reagirChangementAuModele(Modele modele) {
 
                 initialiserGrille(getPartie(modele));
+                 miseAJourGrille(getPartie(modele));
+
+                //refraichir la grille
                 Log.d("atelier06", "VPartie.reagir");
 
 
             }
         });
+
+    }
+
+    private void miseAJourGrille(MPartie partie){
+
+      grille.afficherJetons(partie.getGrille());
 
     }
 

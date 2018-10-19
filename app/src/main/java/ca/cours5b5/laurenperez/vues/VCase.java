@@ -1,10 +1,13 @@
 package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.TextView;
+
+import ca.cours5b5.laurenperez.global.GCouleur;
 
 public class VCase extends AppCompatButton {
 
@@ -30,6 +33,20 @@ public class VCase extends AppCompatButton {
     }
 
     public void initialiser(){
+
+
+
+    }
+
+    public void afficherJeton(GCouleur jeton){
+
+        if(jeton.equals(GCouleur.JAUNE)){
+
+            this.setBackgroundColor(Color.YELLOW);
+
+        } else{
+            this.setBackgroundColor(Color.RED);
+        }
 
 
 
