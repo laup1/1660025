@@ -32,11 +32,7 @@ public class VCase extends AppCompatButton {
 
     }
 
-    public void initialiser(){
 
-
-
-    }
 
     public void afficherJeton(GCouleur jeton){
 

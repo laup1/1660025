@@ -60,7 +60,7 @@ public class VPartie extends Vue {
                  miseAJourGrille(getPartie(modele));
 
                 //refraichir la grille
-                Log.d("atelier06", "VPartie.reagir");
+                Log.d("atelier07", "VPartie.reagirChangementModle");
 
 
             }

@@ -58,6 +58,8 @@ public class ControleurAction {
 
         for(Action actionExecuter : fileAttenteExecution){
 
+            Log.d("atelier07", ControleurAction.class.getSimpleName() + "::executerAccionExecutable");
+
             if(siActionExecutable(actionExecuter)) {
 
                 fileAttenteExecution.remove(actionExecuter);
@@ -98,7 +100,7 @@ public class ControleurAction {
         if(action.getFournisseur() instanceof Modele){
 
             ControleurObservation.lancerObservation((Modele) action.getFournisseur());
-
+            Log.d("atelier07", ControleurAction.class.getSimpleName() + "::lancerObservationSiApplicable");
         }
 
     }

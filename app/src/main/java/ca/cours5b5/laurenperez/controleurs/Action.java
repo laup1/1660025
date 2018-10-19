@@ -46,15 +46,7 @@ public class Action {
     public void setArguments(Object... args){
 
         this.args = args;
-           // if (args instanceof Fournisseur) {
-             //   fournisseur = (Fournisseur) args;
-               // this.args[0] = args;
-            //} else if(args instanceof ListenerFournisseur) {
-              //  listenerFournisseur = (ListenerFournisseur) args;
-               // this.args[1] = args;
-            //} else {
-              //  this.args[2] = args;
-            //}
+
 
 
     }

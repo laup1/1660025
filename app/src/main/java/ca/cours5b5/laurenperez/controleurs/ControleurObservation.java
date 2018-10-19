@@ -58,6 +58,7 @@ public class ControleurObservation {
         if(listenerObservateur != null )
 
             listenerObservateur.reagirNouveauModele(modele);
+        Log.d("atelier07", ControleurObservation.class.getSimpleName() + "::lancerObservation");
 
     }
 }
