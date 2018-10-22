@@ -1,8 +1,5 @@
 package ca.cours5b5.laurenperez.controleurs;
 
-import android.util.ArrayMap;
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,112 +10,117 @@ import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
-public class ControleurAction {
+public final class ControleurAction {
+
+    private ControleurAction(){}
 
     private static Map<GCommande, Action> actions;
     private static List<Action> fileAttenteExecution;
 
-    static{
+    static {
 
         actions = new HashMap<>();
-        fileAttenteExecution = new ArrayList<>();
 
-        for (GCommande commande : GCommande.values() ) {
+        initialiserActions();
+
+        fileAttenteExecution = new ArrayList<>();
+    }
+
+    private static void initialiserActions() {
+
+        for(GCommande commande : GCommande.values()){
 
             actions.put(commande, new Action());
 
         }
 
-
-
     }
 
-    public static Action demanderAction(GCommande commande){
-
+    public static Action demanderAction(GCommande commande) {
         return actions.get(commande);
+    }
+
+    public static void fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {
+
+        enregistrerFournisseur(fournisseur, commande, listenerFournisseur);
+        executerActionsExecutables();
 
     }
 
-    public static void  fournirAction(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur){
+    static void executerDesQuePossible(Action action) {
 
-        enregistrerFournisseur( fournisseur, commande, listenerFournisseur );
-        executerActionExecutables();
-
-    }
-
-    static void executerDesQuePossible(Action action){
-        Log.d("atelier07", ControleurAction.class.getSimpleName() + "::executerDesQuePossible");
-        ajouterActionEnFileAttente(action);
-        executerActionExecutables();
-
+        ajouterActionEnFileDAttente(action);
+        executerActionsExecutables();
 
     }
 
-    private static void executerActionExecutables(){
+    private static void executerActionsExecutables() {
 
-        for(Action actionExecuter : fileAttenteExecution){
+        for (Action action : fileAttenteExecution) {
 
-            Log.d("atelier07", ControleurAction.class.getSimpleName() + "::executerAccionExecutable");
+            if (siActionExecutable(action)) {
 
-            if(siActionExecutable(actionExecuter)) {
+                fileAttenteExecution.remove(action);
 
-                fileAttenteExecution.remove(actionExecuter);
-                executerMaintenant(actionExecuter);
-                lancerObservationSiApplicable(actionExecuter);
+                executerMaintenant(action);
 
+                lancerObservationSiApplicable(action);
 
             }
         }
 
-
-    }
-    static  boolean siActionExecutable(Action action){
-
-        boolean executable = false;
-
-        if(action.getListenerFournisseur() != null){
-            executable = true;
-        }
-
-        return executable;
-
-
     }
 
-    private static synchronized void executerMaintenant(Action action){
-//verificar
-        action.getListenerFournisseur().executer(action.getArgs());
-        Log.d("atelier07", ControleurAction.class.getSimpleName() + "::executerMaintenant");
+    static boolean siActionExecutable(Action action) {
 
-
+        return (action.listenerFournisseur == null) ? false : true;
 
     }
-    //verificar aqui
 
     private static void lancerObservationSiApplicable(Action action){
 
-        if(action.getFournisseur() instanceof Modele){
+        if (action.fournisseur instanceof Modele) {
 
-            ControleurObservation.lancerObservation((Modele) action.getFournisseur());
-            Log.d("atelier07", ControleurAction.class.getSimpleName() + "::lancerObservationSiApplicable");
+            ControleurObservation.lancerObservation((Modele) action.fournisseur);
+
         }
+    }
+
+    private static synchronized void executerMaintenant(Action action){
+
+        action.listenerFournisseur.executer(action.args);
 
     }
 
-    private static void enregistrerFournisseur(Fournisseur fournisseur,GCommande commande, ListenerFournisseur listenerFournisseur){
+    private static void enregistrerFournisseur(Fournisseur fournisseur, GCommande commande, ListenerFournisseur listenerFournisseur) {
 
+        Action action = actions.get(commande);
 
-        Action action = demanderAction(commande);
-        action.setFournisseur(fournisseur);
-        action.setListenerFournisseur(listenerFournisseur);
+        action.fournisseur = fournisseur;
+
+        action.listenerFournisseur = listenerFournisseur;
 
     }
 
-    private static void ajouterActionEnFileAttente(Action action){
+    private static void ajouterActionEnFileDAttente(Action action) {
 
         Action clone = action.cloner();
+
         fileAttenteExecution.add(clone);
 
+    }
+
+    public static void oublierFournisseur(Fournisseur fournisseur) {
+
+        for(Action action : actions.values()){
+
+            if(action.fournisseur == fournisseur){
+
+                action.fournisseur = null;
+                action.listenerFournisseur = null;
+
+            }
+        }
     }
 
 }

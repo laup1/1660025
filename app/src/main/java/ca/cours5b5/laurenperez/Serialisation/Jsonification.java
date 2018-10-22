@@ -1,28 +1,27 @@
-package ca.cours5b5.laurenperez.Serialisation;
+package ca.cours5b5.laurenperez.serialisation;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.Map;
 
-public class Jsonification {
+import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
+
+public final class Jsonification {
+
+    private Jsonification(){}
 
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-   public static Map<String, Object> enObjetJson(String json){
+    public static Map<String, Object> aPartirChaineJson(String json) throws ErreurSerialisation {
 
-       //obtenir un objetJson a partir d'un chaine
+        return gson.fromJson(json, Map.class);
 
-       Map<String, Object> objetJson = gson.fromJson(json, Map.class);
+    }
 
-       return objetJson;
-   }
+    public static String enChaineJson(Map<String, Object> objetJson) throws ErreurSerialisation {
 
-   public static String enChaine(Map<String, Object> objetJson){
+        return gson.toJson(objetJson);
 
-       //obtenir un chaine a partir d'un objet json
-
-       String chaineJson = gson.toJson(objetJson);
-
-       return chaineJson;
-   }
+    }
 }

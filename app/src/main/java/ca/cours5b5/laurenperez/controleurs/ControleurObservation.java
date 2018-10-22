@@ -1,62 +1,48 @@
 package ca.cours5b5.laurenperez.controleurs;
 
-import android.util.ArrayMap;
-import android.util.Log;
-
+import java.util.HashMap;
 import java.util.Map;
 
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
-import ca.cours5b5.laurenperez.modeles.MParametres;
-import ca.cours5b5.laurenperez.modeles.MParametresPartie;
-import ca.cours5b5.laurenperez.modeles.MPartie;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
-public class ControleurObservation {
+public final class ControleurObservation {
 
-    private static Map<Modele, ListenerObservateur> observations = new ArrayMap<>();
+    private ControleurObservation(){}
 
-    public static MPartie partie;
+    private static Map<Modele, ListenerObservateur> observations;
 
-    static{
+    static {
+
+        observations = new HashMap<>();
 
     }
 
-    public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur){
+    public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {
 
-            partie = new MPartie(MParametres.instance.getParametresPartie().cloner());
-
-            Modele modele;
-
-
-            if(nomModele.equalsIgnoreCase(MParametres.class.getSimpleName())) {
-                modele = MParametres.instance;
-
-
-            } else {
-                modele = ControleurObservation.partie;
-
-
-            }
+        Modele modele = ControleurModeles.getModele(nomModele);
 
         observations.put(modele, listenerObservateur);
-         lancerObservation(modele);
 
-
-
-
-        Log.d("atelier06", "ControleurObservation.observerModele");
-    }
-
-
-    public static void lancerObservation(Modele modele){
-
-
-        ListenerObservateur listenerObservateur = observations.get(modele);
-
-        if(listenerObservateur != null )
-
-            listenerObservateur.reagirNouveauModele(modele);
-        Log.d("atelier07", ControleurObservation.class.getSimpleName() + "::lancerObservation");
+        listenerObservateur.reagirNouveauModele(modele);
 
     }
+
+    public static void lancerObservation(Modele modele) {
+
+        final ListenerObservateur listenerObservateur = observations.get(modele);
+
+        if (listenerObservateur != null) {
+
+            listenerObservateur.reagirChangementAuModele(modele);
+
+        }
+    }
+
+    public static void detruireObservation(Modele modele) {
+
+        observations.remove(modele);
+
+    }
+
 }

@@ -2,24 +2,20 @@ package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
-import ca.cours5b5.laurenperez.R;
+
+
 import ca.cours5b5.laurenperez.controleurs.Action;
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
-import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
-import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
-import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GCouleur;
+import ca.cours5b5.laurenperez.modeles.MColonne;
 import ca.cours5b5.laurenperez.modeles.MGrille;
-import ca.cours5b5.laurenperez.modeles.MParametres;
-import ca.cours5b5.laurenperez.modeles.MParametresPartie;
-import ca.cours5b5.laurenperez.modeles.MPartie;
+
 
 public class VGrille extends GridLayout {
 
@@ -35,211 +31,177 @@ public class VGrille extends GridLayout {
         super(context, attrs, defStyleAttr);
     }
 
-    public VGrille(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-    private int nombreRanges;
+    private int nombreRangees;
 
-    public VGrille getGrille() {
-        return this;
-    }
+    private class Colonne extends ArrayList<VCase> {}
 
+    private List<Colonne> colonnesDeCases;
 
+    private Action actionEntete;
 
-
-    private class Colonne extends ArrayList<VCase>{
-
-        List<VCase> colonnes;
-
-        public Colonne(){
-            colonnes = new ArrayList<>();
-        }
-
-    }
-
-    private List<VCase> colonnesDeCases;
     private List<VEntete> entetes;
-
-    private VCase[][] lesCases;
-    private Action action;
-
 
 
     @Override
-    protected void onFinishInflate(){
+    protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.d("atelier07", VGrille.class.getSimpleName() + "::Grid:Onfinishinflate");
+
+        initialiser();
+
+        demanderActionEntete();
 
 
     }
 
-    public void initialiser(){
+    private void demanderActionEntete() {
 
+        actionEntete = ControleurAction.demanderAction(GCommande.JOUER_COUP_ICI);
+
+    }
+
+    private void initialiser() {
+
+        colonnesDeCases = new ArrayList<>();
 
         entetes = new ArrayList<>();
 
-
     }
 
 
+    void creerGrille(int hauteur, int largeur) {
 
-    void creerGrille(int hauteur, int largeur){
-         nombreRanges = hauteur;
-         initialiser();
-        initialiserTableauDeCases(hauteur,largeur);
-         initialiserColonnes(largeur);
-         ajouterEnTetes(largeur);
+        // +1 pour la rangee des en-têtes
+        this.nombreRangees = hauteur + 1;
+
+        this.setRowCount(nombreRangees);
+        this.setColumnCount(largeur);
+
+        initialiserColonnes(largeur);
+
+        ajouterEnTetes(largeur);
         ajouterCases(hauteur, largeur);
-        demanderActionEnTete();
-
 
 
     }
 
     private void initialiserColonnes(int largeur){
 
-        colonnesDeCases = new ArrayList<>(largeur);
+        for(int i=0; i<largeur; i++){
 
+            colonnesDeCases.add(new Colonne());
+
+        }
     }
 
     private void ajouterEnTetes(int largeur){
 
-        for(int i = 0; i < largeur; i++){
+        for(int colonne=0; colonne<largeur; colonne++){
 
-            VEntete entete = new VEntete( super.getContext(), i);
-            this.addView(entete , getMiseEnPageEntete(i));
-            installerListenerEntete(entete, i);
+            VEntete entete = new VEntete(getContext(), colonne);
+
+            LayoutParams miseEnPageEntete = getMiseEnPageEntete(colonne);
+
+            this.addView(entete, miseEnPageEntete);
+
             entetes.add(entete);
 
-            Log.d("atelier06", String.valueOf(i));
+            installerListenerEntete(entete);
 
         }
-
     }
+
 
     private LayoutParams getMiseEnPageEntete(int colonne){
 
-        LayoutParams mesParams = new LayoutParams();
-        mesParams.width = 0;
-        mesParams.height = 0;
-        mesParams.setGravity(Gravity.FILL);
-        mesParams.rightMargin = 5;
-        mesParams.leftMargin = 5;
+        Spec specRangee = GridLayout.spec(0, 3f);
+        Spec specColonne = GridLayout.spec(colonne, 1f);
 
-         int rangee = 0;
+        LayoutParams paramsEntete = new LayoutParams(specRangee, specColonne);
 
-
-
-        Spec specRangee = GridLayout.spec(rangee, 3.0f);
-        Spec specColonne = GridLayout.spec(colonne, 1.0f);
-
-        mesParams.columnSpec = specColonne;
-        mesParams.rowSpec = specRangee;
+        paramsEntete.width = 0;
+        paramsEntete.height = 0;
+        paramsEntete.setGravity(Gravity.FILL);
+        paramsEntete.rightMargin = 5;
+        paramsEntete.leftMargin = 5;
 
 
-        return  mesParams;
+        return paramsEntete;
+    }
+
+    private void installerListenerEntete(final VEntete entete) {
+
+        entete.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                actionEntete.setArguments(entete.getColonne());
+                actionEntete.executerDesQuePossible();
+                
+            }
+        });
 
     }
 
-    private void ajouterCases(int hauteur, int largeur){
+    private void ajouterCases(int hauteur, int largeur) {
 
+        for (int colonne = 0; colonne < largeur; colonne++) {
+            for (int rangee = 0; rangee < hauteur; rangee++) {
 
+                VCase vCase = new VCase(getContext(), rangee, colonne);
+                LayoutParams miseEnPageCase = getMiseEnPageCase(rangee, colonne);
 
-        for (int i = 0; i < largeur ; i++){
+                this.addView(vCase, miseEnPageCase);
 
-            for (int j=hauteur; j> 0 ; j--){
-
-
-                VCase leCase = new VCase(super.getContext(),j-(2*(j-hauteur))- hauteur, i);
-
-                addView(leCase, getMiseEnPageCase(j, i ));
-
-                colonnesDeCases.add(leCase);
-               lesCases[j-(2*(j-hauteur))- hauteur][i] = leCase;
-
-                Log.d("atelier06", "cases" + i + j);
+                colonnesDeCases.get(colonne).add(vCase);
 
             }
         }
-
     }
 
     private LayoutParams getMiseEnPageCase(int rangee, int colonne){
 
-        LayoutParams mesParams = new LayoutParams();
-        mesParams.width = 0;
-        mesParams.height = 0;
-        mesParams.setGravity(Gravity.FILL);
-        mesParams.rightMargin = 5;
-        mesParams.leftMargin = 5;
-        
+        // Pour nous, la rangée 0 est en bas
+        int dernierIndiceRangee = nombreRangees -1;
+        int indiceRangeeCetteCase = dernierIndiceRangee -rangee;
 
+        Spec specRangee = GridLayout.spec(indiceRangeeCetteCase, 1f);
+        Spec specColonne = GridLayout.spec(colonne, 1f);
 
-        Spec specRangee = GridLayout.spec(rangee +1, 1.0f);
-        Spec specColonne = GridLayout.spec(colonne, 1.0f);
-        mesParams.columnSpec = specColonne;
-        mesParams.rowSpec = specRangee;
+        LayoutParams paramsCase = new LayoutParams(specRangee, specColonne);
 
-        return  mesParams;
+        paramsCase.width = 0;
+        paramsCase.height = 0;
+        paramsCase.setGravity(Gravity.FILL);
+        paramsCase.leftMargin = 5;
+        paramsCase.rightMargin = 5;
+        paramsCase.topMargin = 5;
+        paramsCase.bottomMargin = 5;
 
-    }
-
-    private void initialiserTableauDeCases(int hauteur, int largeur){
-
-        lesCases = new VCase[hauteur][largeur];
-
-    }
-
-
-
-    private void demanderActionEnTete(){
-
-       action =  ControleurAction.demanderAction(GCommande.JOUER_COUP_ICI);
-
-
-
-
-    }
-
-    private void installerListenerEntete(final VEntete entete, final int colonne){
-
-        entete.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-
-               action.setArguments(colonne);
-               action.executerDesQuePossible();
-
-
-
-            }
-        });
-
-
+        return paramsCase;
     }
 
     void afficherJetons(MGrille grille){
 
-        for(int i = 0; i <grille.getColonnes().size(); i++){
+        List<MColonne> colonnes = grille.getColonnes();
 
-            for (int j = 0; j < grille.getColonnes().get(i).getJetons().size(); j++) {
+        for(int numeroColonne=0; numeroColonne < colonnes.size(); numeroColonne++){
 
-                afficherJeton(i, j, grille.getColonnes().get(i).getJetons().get(j));
+            List<GCouleur> jetons = colonnes.get(numeroColonne).getJetons();
+
+            for(int numeroRangee=0; numeroRangee < jetons.size(); numeroRangee++){
+
+                GCouleur jeton = jetons.get(numeroRangee);
+
+                afficherJeton(numeroColonne, numeroRangee, jeton);
+
             }
         }
-
-
-
-
-
     }
 
     private void afficherJeton(int colonne, int rangee, GCouleur jeton){
 
-        lesCases[rangee][colonne].afficherJeton(jeton);
+        colonnesDeCases.get(colonne).get(rangee).afficherJeton(jeton);
 
     }
-
 
 }

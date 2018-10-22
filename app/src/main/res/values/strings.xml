@@ -1,17 +1,23 @@
 <resources>
-    <string name="app_name">LaurenPerez</string>
-    <string name="hello_world">Hi!</string>
-    <string name="hauteur">Heigth</string>
-    <string name="largeur">Widht</string>
-    <string name="pourGagner">To win</string>
-    <string name="buttonMenuPrincipal">Settings</string>
-    <string name="jouer">Play</string>
-    <string name="joueur1">Player1</string>
-    <string name="joueur2">Player2</string>
 
+    <string name="app_name" translatable="false">LaurenPerez</string>
 
+    <string name="bonjour">Bonjour!</string>
 
+    <string name="paysage">paysage</string>
+    <string name="portrait" translatable="false">portrait</string>
 
+    <string name="hauteur">Hauteur: </string>
+    <string name="largeur">Largeur: </string>
+    <string name="pour_gagner">Pour gagner: </string>
 
+    <string name="parametres">Parametres</string>
+
+    <string name="jouer">Jouer</string>
+
+    <string name="entete">↓\n↓</string>
+
+    <string name="joueur1">joueur1</string>
+    <string name="joueur2">joueur2</string>
 
 </resources>

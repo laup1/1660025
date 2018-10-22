@@ -3,19 +3,19 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.GridLayout;
 
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
-import ca.cours5b5.laurenperez.modeles.MParametres;
-
+import ca.cours5b5.laurenperez.exceptions.ErreurObservation;
 import ca.cours5b5.laurenperez.modeles.MParametresPartie;
 import ca.cours5b5.laurenperez.modeles.MPartie;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
+
 public class VPartie extends Vue {
+
+    private VGrille grille;
 
     public VPartie(Context context) {
         super(context);
@@ -28,60 +28,50 @@ public class VPartie extends Vue {
     public VPartie(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
-    private VGrille grille;
 
     @Override
-    protected  void onFinishInflate(){
+    protected void onFinishInflate() {
         super.onFinishInflate();
-        Log.d("atelier06", "VPartie.onFinishInflate");
 
-        grille = findViewById(R.id.vgrille);
-
-       initialiser();
-    }
-
-    private void initialiser(){
+        initialiser();
 
         observerPartie();
 
     }
 
-    private void observerPartie(){
+    private void initialiser() {
 
-        Log.d("atelier06", "VPartie.observerPartie");
-
-        ControleurObservation.observerModele(MPartie.class.getSimpleName(), new ListenerObservateur() {
-
-
-            @Override
-            public void reagirChangementAuModele(Modele modele) {
-
-                initialiserGrille(getPartie(modele));
-                 miseAJourGrille(getPartie(modele));
-
-                //refraichir la grille
-                Log.d("atelier07", "VPartie.reagirChangementModle");
-
-
-            }
-        });
+        grille = findViewById(R.id.grille);
 
     }
 
-    private void miseAJourGrille(MPartie partie){
+    private void observerPartie() {
 
-      grille.afficherJetons(partie.getGrille());
+        ControleurObservation.observerModele(MPartie.class.getSimpleName(),
+                new ListenerObservateur() {
+                    @Override
+                    public void reagirNouveauModele(Modele modele) {
 
+                        MPartie partie = getPartie(modele);
+
+                        preparerAffichage(partie);
+
+                        miseAJourGrille(partie);
+
+                    }
+
+                    @Override
+                    public void reagirChangementAuModele(Modele modele) {
+
+                        MPartie partie = getPartie(modele);
+
+                        miseAJourGrille(partie);
+
+                    }
+                });
     }
 
-    private MPartie getPartie(Modele modele){
-
-        MPartie partie = (MPartie) modele;
-        return partie;
-
-    }
-
-    private void initialiserGrille(MPartie partie){
+    private void preparerAffichage(MPartie partie) {
 
         MParametresPartie parametresPartie = partie.getParametres();
 
@@ -89,15 +79,24 @@ public class VPartie extends Vue {
 
     }
 
+    private MPartie getPartie(Modele modele){
 
+        try{
 
+            return (MPartie) modele;
 
+        }catch(ClassCastException e){
 
+            throw new ErreurObservation(e);
 
+        }
 
+    }
 
+    private void miseAJourGrille(MPartie partie){
 
+        grille.afficherJetons(partie.getGrille());
 
-
+    }
 
 }

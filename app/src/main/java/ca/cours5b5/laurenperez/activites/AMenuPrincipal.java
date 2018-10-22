@@ -2,76 +2,71 @@ package ca.cours5b5.laurenperez.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import ca.cours5b5.laurenperez.R;
+import ca.cours5b5.laurenperez.controleurs.ControleurAction;
+import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.laurenperez.global.GCommande;
 
-public class AMenuPrincipal extends Activite {
-
-    static{
-        Log.d("atelier04", AParametres.class.getSimpleName()+ ":static");
-    }
+public class AMenuPrincipal extends Activite implements Fournisseur {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menuprincipal);
-        creerLog("onCreate");
+        setContentView(R.layout.activity_menu_principal);
 
-        Button boutonParametres = this.findViewById(R.id.buttonMenuPrincipal);
-        boutonParametres.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent vueParametres = new Intent(AMenuPrincipal.this, AParametres.class);
-                AMenuPrincipal.this.startActivity(vueParametres);
-            }
-        });
-
-        Button boutonJouer = this.findViewById(R.id.button);
-        boutonJouer.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Intent vueMPartie = new Intent(AMenuPrincipal.this, APartie.class);
-                AMenuPrincipal.this.startActivity(vueMPartie);
-            }
-        });
+        fournirActions();
 
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        creerLog("onResume");
+    private void fournirActions() {
+
+        fournirActionOuvrirMenuParametres();
+
+        fournirActionDemarrerPartie();
     }
 
-    @Override
-    protected void onPause(){
-        super.onPause();
-        creerLog("onPause");
+    private void fournirActionOuvrirMenuParametres() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.OUVRIR_MENU_PARAMETRES,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        transitionParametres();
+
+                    }
+                });
+    }
+
+    private void fournirActionDemarrerPartie() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.DEMARRER_PARTIE,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        transitionPartie();
+
+                    }
+                });
+    }
+
+    private void transitionParametres(){
+
+        Intent intentionParametres = new Intent(this, AParametres.class);
+        startActivity(intentionParametres);
 
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-        creerLog("onSaveInstanceState");
-    }
+    private void transitionPartie(){
 
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        creerLog("onDestroy");
+        Intent intentionParametres = new Intent(this, APartie.class);
+        startActivity(intentionParametres);
 
     }
-
-
-
-
-
 
 }

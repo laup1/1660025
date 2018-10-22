@@ -1,124 +1,206 @@
 package ca.cours5b5.laurenperez.modeles;
 
 import java.util.ArrayList;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ca.cours5b5.laurenperez.Serialisation.AttributSerialisable;
-import ca.cours5b5.laurenperez.exceptions.ErreurDeSerialisation;
+
+import ca.cours5b5.laurenperez.controleurs.ControleurAction;
+import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.laurenperez.exceptions.ErreurAction;
+import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
+import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GConstantes;
+import ca.cours5b5.laurenperez.serialisation.AttributSerialisable;
 
-public class MParametres extends Modele {
+public class MParametres extends Modele implements Fournisseur {
 
-    public static MParametres instance = new MParametres();
-
-   @AttributSerialisable
-   public MParametresPartie parametresPartie;
-   private String __parametresPartie = "parametresPartie";
+    @AttributSerialisable
+    public MParametresPartie parametresPartie;
+    private String __parametresPartie = "parametresPartie";
 
     private List<Integer> choixHauteur;
     private List<Integer> choixLargeur;
     private List<Integer> choixPourGagner;
 
-    public MParametres(){
+    public MParametres() {
+        super();
 
+        this.parametresPartie = new MParametresPartie();
 
-      parametresPartie = new MParametresPartie();
-      genererListesDeChoix();
+        fournirActions();
+
+        genererListesDeChoix();
+
     }
 
-    public List<Integer> getChoixHauteur(){
+    public List<Integer> getChoixHauteur() {
         return choixHauteur;
     }
 
-    public List<Integer> getChoixLargeur(){
+    public List<Integer> getChoixLargeur() {
         return choixLargeur;
     }
 
-    public List<Integer> getChoixPourGagner(){
+    public List<Integer> getChoixPourGagner() {
         return choixPourGagner;
     }
 
     public MParametresPartie getParametresPartie() {
-
         return parametresPartie;
     }
 
-    @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurDeSerialisation{
-    //charge les données du modèle à partir d'une sauvegarde en objetJson
-        for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
-            String cle = entry.getKey();
-            Object valeur = entry.getValue();
 
-            if (cle.equals(__parametresPartie)) {
-                parametresPartie.aPartirObjetJson((Map<String, Object>) valeur);
-            }
+    private void fournirActions() {
+
+        fournirActionHauteur();
+        fournirActionLargeur();
+        fournirActionPourGagner();
+
+    }
+
+    private void fournirActionHauteur() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_HAUTEUR,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setHauteur((Integer) args[0]);
+                            genererListeChoixPourGagner();
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionLargeur() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_LARGEUR,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setLargeur((int) args[0]);
+                            genererListeChoixPourGagner();
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void fournirActionPourGagner() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.CHOISIR_POUR_GAGNER,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            getParametresPartie().setPourGagner((Integer) args[0]);
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+    private void genererListesDeChoix() {
+
+        genererListeChoixHauteur();
+        genererListeChoixLargeur();
+        genererListeChoixPourGagner();
+
+    }
+
+    private List<Integer> genererListeChoix(int min, int max) {
+
+        List<Integer> listeChoix = new ArrayList<>();
+
+        for (int i = min; i <= max; i++) {
+            listeChoix.add(i);
         }
 
+        return listeChoix;
 
+    }
 
+    private void genererListeChoixHauteur() {
+
+        choixHauteur = genererListeChoix(GConstantes.HAUTEUR_MIN, GConstantes.HAUTEUR_MAX);
+
+    }
+
+    private void genererListeChoixLargeur() {
+
+        choixLargeur = genererListeChoix(GConstantes.LARGEUR_MIN, GConstantes.LARGEUR_MAX);
+
+    }
+
+    private void genererListeChoixPourGagner() {
+
+        int pourGagnerMax = calculerPourGagnerMax();
+
+        ajusterPourGagnerAuBesoin(pourGagnerMax);
+
+        choixPourGagner = genererListeChoix(GConstantes.POUR_GAGNER_MIN, pourGagnerMax);
+
+    }
+
+    private int calculerPourGagnerMax() {
+
+        return Math.max(parametresPartie.getHauteur(), parametresPartie.getLargeur()) * 75 / 100;
+
+    }
+
+    private void ajusterPourGagnerAuBesoin(int pourGagnerMax) {
+
+        if (parametresPartie.getPourGagner() >= pourGagnerMax) {
+            parametresPartie.setPourGagner(pourGagnerMax);
+        }
 
     }
 
     @Override
-    public Map<String, Object> enObjetJson() throws ErreurDeSerialisation{
-    //retoure une sauvegarde des données du modèle
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
 
-            Map<String, Object> objetJson = new HashMap<>();
-            objetJson.put(this.__parametresPartie, this.__parametresPartie);
-            return objetJson;
-
-
-
+        parametresPartie.aPartirObjetJson((Map<String, Object>) objetJson.get(__parametresPartie));
 
     }
 
-    private List<Integer> genererListeChoix(int min, int max){
+    @Override
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation {
 
-        List<Integer> listChoix = new ArrayList<Integer>();
-        for ( ; min <= max; min++){
+        Map<String, Object> objetJson = new HashMap<>();
 
-            listChoix.add(min);
+        objetJson.put(__parametresPartie, parametresPartie.enObjetJson());
 
-        }
-        return listChoix;
-
+        return objetJson;
 
     }
-    private void genererListesDeChoix(){
-        choixHauteur = genererChoixHauteur();
-        choixLargeur = genererChoixLargeur();
-        choixPourGagner = genererChoixPourGagner();
-    }
-
-    public List<Integer> genererChoixHauteur(){
-
-
-       return genererListeChoix(GConstantes.MIN_HAUTEUR,GConstantes.MAX_HAUTEUR);
-
-
-
-    }
-    public List<Integer> genererChoixLargeur(){
-
-        return  genererListeChoix(GConstantes.MIN_LARGEUR,GConstantes.MAX_LARGEUR);
-
-
-
-    }
-    public List<Integer> genererChoixPourGagner(){
-
-
-       return genererListeChoix(GConstantes.MIN_POURGAGNER, GConstantes.MAX_POURGAGNER);
-
-
-
-    }
-
-
-
 
 }

@@ -2,63 +2,37 @@ package ca.cours5b5.laurenperez.activites;
 
 
 import android.os.Bundle;
-import android.util.Log;
-
-import java.util.Map;
 
 import ca.cours5b5.laurenperez.R;
-import ca.cours5b5.laurenperez.Serialisation.Jsonification;
-import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
+import ca.cours5b5.laurenperez.controleurs.ControleurModeles;
+import ca.cours5b5.laurenperez.donnees.SauvegardeTemporaire;
 import ca.cours5b5.laurenperez.modeles.MParametres;
-import ca.cours5b5.laurenperez.modeles.MParametresPartie;
-import ca.cours5b5.laurenperez.vues.VParametres;
-import ca.cours5b5.laurenperez.vues.VPartie;
+import ca.cours5b5.laurenperez.modeles.MPartie;
 
 public class APartie extends Activite {
 
-    private VPartie partie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_apartie);
-        partie = new VPartie(this);
 
-
-        if(savedInstanceState != null) {
-            restaurerParametres(savedInstanceState);
-        }
+        setContentView(R.layout.activity_partie);
 
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState){
+    protected void onPause() {
+        super.onPause();
+
+        ControleurModeles.sauvegarderModele(MPartie.class.getSimpleName());
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        sauvegarderParametres(outState);
 
-        creerLog("onSaveInstanceState");
-    }
-
-    private void restaurerParametres( Bundle savedInstanceState){
-
-        String json = savedInstanceState.getString("MPartie");
-        Map<String,Object> objetJson =  Jsonification.enObjetJson(json);
-        ControleurObservation.partie.aPartirObjetJson(objetJson);
-        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, clé: MPartie");
-        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::restaurerParametres, json:" + objetJson.toString());
-
-
-    }
-
-    private void sauvegarderParametres( Bundle outState){
-
-        Map<String, Object> objetJson = ControleurObservation.partie.enObjetJson();
-
-        String json = Jsonification.enChaine(objetJson);
-
-        outState.putString("MPartie", json);
-        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, clé: MPartie");
-        Log.d("Atelier05", AParametres.class.getSimpleName()+ "::SauvagarderParametres, json:" + objetJson.toString());
+        ControleurModeles.sauvegarderModeleDansCetteSource(MPartie.class.getSimpleName(),
+                new SauvegardeTemporaire(outState));
 
     }
 }

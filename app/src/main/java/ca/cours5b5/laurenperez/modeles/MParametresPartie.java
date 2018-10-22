@@ -3,63 +3,48 @@ package ca.cours5b5.laurenperez.modeles;
 import java.util.HashMap;
 import java.util.Map;
 
-import ca.cours5b5.laurenperez.Serialisation.AttributSerialisable;
-import ca.cours5b5.laurenperez.exceptions.ErreurDeSerialisation;
+import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
 import ca.cours5b5.laurenperez.global.GConstantes;
+import ca.cours5b5.laurenperez.serialisation.AttributSerialisable;
 
 public class MParametresPartie extends Modele {
 
     @AttributSerialisable
     public Integer hauteur;
-    private final String __hauteur = "hauteur";
+    protected final String __hauteur = "hauteur";
 
     @AttributSerialisable
     public Integer largeur;
-    private final String __largeur = "largeur";
+    protected final String __largeur = "largeur";
 
     @AttributSerialisable
     public Integer pourGagner;
-    private final String __pourGagner = "pourGagner";
-
-    public static MParametresPartie aPartirMParametres(MParametres mParametres){
-
-         MParametresPartie instanceMParametresPartie = mParametres.getParametresPartie().cloner();
+    protected final String __pourGagner = "pourGagner";
 
 
-         return instanceMParametresPartie;
+    public MParametresPartie(){
+        super();
+
+        hauteur = GConstantes.HAUTEUR_PAR_DEFAUT;
+        largeur = GConstantes.LARGEUR_PAR_DEFAUT;
+        pourGagner = GConstantes.POUR_GAGNER_PAR_DEFAUT;
+
     }
 
     public MParametresPartie cloner(){
 
-        MParametresPartie partieClone = new MParametresPartie(MParametres.instance.getParametresPartie().getHauteur(), MParametres.instance.getParametresPartie().getLargeur(), MParametres.instance.getParametresPartie().getPourGagner());
+        MParametresPartie mParametresPartie = new MParametresPartie();
 
-        return partieClone;
+        mParametresPartie.setHauteur(hauteur);
+        mParametresPartie.setLargeur(largeur);
+        mParametresPartie.setPourGagner(pourGagner);
 
-    }
-    public MParametresPartie(){
-            hauteur = GConstantes.DEFAULT_HAUTEUR;
-            largeur = GConstantes.DEFAULT_LARGEUR;
-            pourGagner = GConstantes.DEFAULT_POURGAGNER;
-
-
-
-
-
-
-    }
-    public MParametresPartie(int hauteur, int largeur, int pourGagner){
-
-        this.hauteur = hauteur;
-        this.largeur = largeur;
-        this.pourGagner = pourGagner;
-
+        return mParametresPartie;
 
     }
 
+    public Integer getHauteur() { return hauteur; }
 
-    public Integer getHauteur() {
-        return hauteur;
-    }
     public Integer getLargeur() {
         return largeur;
     }
@@ -80,37 +65,47 @@ public class MParametresPartie extends Modele {
         this.pourGagner = pourGagner;
     }
 
-
     @Override
-    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurDeSerialisation{
+    public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation  {
+        for(Map.Entry<String, Object> entry : objetJson.entrySet()){
 
-        for (Map.Entry<String, Object> entry : objetJson.entrySet()) {
+            String chaineValeur = (String) entry.getValue();
 
-            String cle = entry.getKey();
-            Object valeur = entry.getValue();
+            switch (entry.getKey()){
 
-            if(cle.equals(__hauteur)) {
-                hauteur = Integer.valueOf((String) valeur);
-            } else if(cle.equals(__largeur)){
-                largeur = Integer.valueOf((String) valeur);
-            }else{
-                pourGagner = Integer.valueOf((String) valeur);
+                case __hauteur:
+
+                    hauteur = Integer.valueOf(chaineValeur);
+                    break;
+
+                case __largeur:
+
+                    largeur = Integer.valueOf(chaineValeur);
+                    break;
+
+
+                case __pourGagner:
+
+                    pourGagner = Integer.valueOf(chaineValeur);
+                    break;
+
+                default:
+
+                    throw new ErreurSerialisation("Attribut inconnu: " + entry.getKey());
             }
-
-
         }
-
-
     }
 
     @Override
-    public Map<String, Object> enObjetJson() throws ErreurDeSerialisation{
-
+    public Map<String, Object> enObjetJson() throws ErreurSerialisation  {
         Map<String, Object> objetJson = new HashMap<>();
+
         objetJson.put(__hauteur, hauteur.toString());
         objetJson.put(__largeur, largeur.toString());
         objetJson.put(__pourGagner, pourGagner.toString());
+
         return objetJson;
 
     }
+
 }
