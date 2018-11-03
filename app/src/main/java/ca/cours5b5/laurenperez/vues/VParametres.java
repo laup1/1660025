@@ -19,6 +19,7 @@ import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.laurenperez.exceptions.ErreurObservation;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.modeles.MParametres;
+import ca.cours5b5.laurenperez.modeles.MPartie;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
 
@@ -27,10 +28,12 @@ public class VParametres extends Vue {
     private Spinner spinnerHauteur;
     private Spinner spinnerLargeur;
     private Spinner spinnerPourGagner;
+    private Button buttonEffacer;
 
     private Action actionHauteur;
     private Action actionLargeur;
     private Action actionPourGagner;
+    private Action actionEffacer;
 
     public VParametres(Context context) {
         super(context);
@@ -60,9 +63,11 @@ public class VParametres extends Vue {
 
     private void initialiser(){
 
+        //buttonEffacer = findViewById(R.id.button_effacer);
         spinnerHauteur = findViewById(R.id.spinner_hauteur);
         spinnerLargeur = findViewById(R.id.spinner_largeur);
         spinnerPourGagner = findViewById(R.id.spinner_pour_gagner);
+
 
         initialiserSpinner(spinnerHauteur);
         initialiserSpinner(spinnerLargeur);
@@ -72,6 +77,7 @@ public class VParametres extends Vue {
 
     private void demanderActions() {
 
+        actionEffacer = ControleurAction.demanderAction(GCommande.EFFACER_MODELE);
         actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
         actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
         actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
@@ -88,12 +94,26 @@ public class VParametres extends Vue {
 
     private void installerListeners() {
 
+        installerListenerEffacer();
+
         installerListenerHauteur();
         installerListenerLargeur();
         installerListenerPourGagner();
 
     }
+    private void installerListenerEffacer() {
 
+        buttonEffacer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                actionEffacer.setArguments(MPartie.class.getSimpleName());
+                actionEffacer.executerDesQuePossible();
+
+            }
+        });
+
+    }
     private void installerListenerHauteur(){
 
         spinnerHauteur.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

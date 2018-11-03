@@ -12,5 +12,6 @@ public enum GCommande {
     DEMARRER_PARTIE,
 
     JOUER_COUP_ICI,
+    EFFACER_MODELE,
 
 }

@@ -13,6 +13,7 @@ import ca.cours5b5.laurenperez.modeles.MParametresPartie;
 import ca.cours5b5.laurenperez.modeles.MPartie;
 import ca.cours5b5.laurenperez.modeles.Modele;
 import ca.cours5b5.laurenperez.donnees.Disque;
+import ca.cours5b5.laurenperez.usagers.UsagerCourant;
 
 public final class ControleurModeles {
 
@@ -57,6 +58,8 @@ public final class ControleurModeles {
         Modele modele = modelesEnMemoire.get(nomModele);
 
         if(modele == null){
+
+
 
             modele =  chargerViaSequenceDeChargement(nomModele);
 
@@ -137,7 +140,27 @@ public final class ControleurModeles {
     }
 
    private static String getCheminSauvegarde(String nomModele){
-        return null;
+
+        return nomModele + "/";
    }
+
+    public static void effacer(String nomModele){
+
+        modelesEnMemoire.remove(nomModele);
+
+        for(SourceDeDonnees source : listeDeSauvegardes){
+
+            effacerModeleSource(nomModele, source);
+
+        }
+
+    }
+
+    public static void effacerModeleSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
+
+        sourceDeDonnees.effacer(nomModele);
+
+    }
+
 
 }

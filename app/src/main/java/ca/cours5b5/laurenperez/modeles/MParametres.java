@@ -7,6 +7,7 @@ import java.util.Map;
 
 
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
+import ca.cours5b5.laurenperez.controleurs.ControleurModeles;
 import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.exceptions.ErreurAction;
@@ -73,6 +74,29 @@ public class MParametres extends Modele implements Fournisseur {
 
                             getParametresPartie().setHauteur((Integer) args[0]);
                             genererListeChoixPourGagner();
+
+                        } catch (ClassCastException
+                                | IndexOutOfBoundsException e) {
+
+                            throw new ErreurAction(e);
+
+                        }
+                    }
+                });
+    }
+
+
+    private void fournirActionEffacer() {
+
+        ControleurAction.fournirAction(this,
+                GCommande.EFFACER_MODELE,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        try {
+
+                            ControleurModeles.effacer((String) args[0]);
 
                         } catch (ClassCastException
                                 | IndexOutOfBoundsException e) {

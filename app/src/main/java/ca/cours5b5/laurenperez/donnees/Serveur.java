@@ -7,10 +7,15 @@ public final  class Serveur  extends SourceDeDonnees{
 
     private Serveur(){}
 
-    private static final Serveur instance;
+   // private static final Serveur instance ;
 
-    public static Serveur getInstance(){
-        return instance;
+  //  public static Serveur getInstance(){
+     //   return instance;
+    //}
+
+    @Override
+    public void effacer(String cheminSauvegarde) {
+
     }
 
     @Override

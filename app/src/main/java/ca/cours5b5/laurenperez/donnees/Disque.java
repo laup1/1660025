@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.util.Map;
 
+import ca.cours5b5.laurenperez.exceptions.ErreurModele;
 import ca.cours5b5.laurenperez.global.GConstantes;
 import ca.cours5b5.laurenperez.serialisation.Jsonification;
 
@@ -80,18 +81,34 @@ public final class Disque extends SourceDeDonnees {
     }
 
 
-    private File getFichier(String nomModele) {
+    private File getFichier(String cheminSauvegarde) {
 
-        String nomFichier = getNomFichier(nomModele);
+        String nomFichier = getNomFichier(cheminSauvegarde);
 
         return new File(repertoireRacine, nomFichier);
 
     }
 
-    private String getNomFichier(String nomModele) {
+    private String getNomFichier(String cheminSauvegarde) {
+
+        String nomModele = getNomModel(cheminSauvegarde);
 
         return nomModele + GConstantes.EXTENSION_PAR_DEFAUT;
 
     }
 
+    @Override
+    public void effacer(String cheminSauvegarde) {
+
+        File fichier = getFichier(cheminSauvegarde);
+
+        try {
+
+            fichier.delete();
+
+        } catch (Exception e) {
+            throw new ErreurModele(e);
+        }
+
+    }
 }
