@@ -33,6 +33,21 @@ public final class Disque extends SourceDeDonnees {
     }
 
     @Override
+    public void detruireSauvegarde(String cheminSauvegarde) {
+
+        File fichier = getFichier(cheminSauvegarde);
+
+        try {
+
+            fichier.delete();
+
+        } catch (Exception e) {
+            throw new ErreurModele(e);
+        }
+
+    }
+
+    @Override
     public Map<String, Object> chargerModele(String cheminSauvegarde) {
 
         File fichier = getFichier(cheminSauvegarde);
@@ -97,18 +112,5 @@ public final class Disque extends SourceDeDonnees {
 
     }
 
-    @Override
-    public void effacer(String cheminSauvegarde) {
 
-        File fichier = getFichier(cheminSauvegarde);
-
-        try {
-
-            fichier.delete();
-
-        } catch (Exception e) {
-            throw new ErreurModele(e);
-        }
-
-    }
 }

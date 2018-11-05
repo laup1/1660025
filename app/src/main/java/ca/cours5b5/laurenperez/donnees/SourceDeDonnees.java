@@ -5,7 +5,8 @@ import java.util.Map;
 
 public abstract class SourceDeDonnees {
 
-    public abstract void effacer(final String cheminSauvegarde);
+    public abstract void detruireSauvegarde(final String cheminSauvegarde);
+
 
     public abstract Map<String, Object> chargerModele(final String cheminSauvegarde);
 

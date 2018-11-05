@@ -15,6 +15,12 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
         this.bundle = bundle;
     }
 
+
+    @Override
+    public void detruireSauvegarde(String cheminSauvegarde) {
+
+    }
+
     @Override
     public Map<String, Object> chargerModele(String cheminSauvegarde) {
 

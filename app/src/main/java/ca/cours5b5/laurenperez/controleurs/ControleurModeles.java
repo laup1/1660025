@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.laurenperez.donnees.Serveur;
 import ca.cours5b5.laurenperez.donnees.SourceDeDonnees;
 import ca.cours5b5.laurenperez.exceptions.ErreurModele;
 import ca.cours5b5.laurenperez.modeles.MParametres;
@@ -31,6 +32,7 @@ public final class ControleurModeles {
 
         listeDeSauvegardes = new ArrayList<>();
         listeDeSauvegardes.add(Disque.getInstance());
+        listeDeSauvegardes.add(Serveur.getInstance());
 
     }
 
@@ -158,7 +160,7 @@ public final class ControleurModeles {
 
     public static void effacerModeleSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
 
-        sourceDeDonnees.effacer(nomModele);
+        sourceDeDonnees.detruireSauvegarde(nomModele);
 
     }
 
