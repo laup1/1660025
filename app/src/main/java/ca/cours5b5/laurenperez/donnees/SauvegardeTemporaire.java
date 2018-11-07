@@ -19,6 +19,13 @@ public class SauvegardeTemporaire extends SourceDeDonnees {
     @Override
     public void detruireSauvegarde(String cheminSauvegarde) {
 
+        if(bundle != null){
+
+            bundle.remove(getCle(cheminSauvegarde));
+
+        }
+
+
     }
 
     @Override

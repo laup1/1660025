@@ -13,5 +13,7 @@ public enum GCommande {
 
     JOUER_COUP_ICI,
     EFFACER_MODELE,
+    SECONNECTER,
+    SE_DECONNECTER,
 
 }

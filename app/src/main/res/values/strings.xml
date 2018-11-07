@@ -19,6 +19,7 @@
 
     <string name="joueur1">joueur1</string>
     <string name="joueur2">joueur2</string>
-    <string name="connexion"> connexion</string>
+    <string name="connexion"> connection</string>
+    <string name="out"> Déconnection</string>
 
 </resources>

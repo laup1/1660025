@@ -28,7 +28,7 @@ public class VParametres extends Vue {
     private Spinner spinnerHauteur;
     private Spinner spinnerLargeur;
     private Spinner spinnerPourGagner;
-    private Button buttonEffacer;
+  private Button buttonEffacer;
 
     private Action actionHauteur;
     private Action actionLargeur;
@@ -63,7 +63,7 @@ public class VParametres extends Vue {
 
     private void initialiser(){
 
-        //buttonEffacer = findViewById(R.id.button_effacer);
+        //buttonEffacer = findViewById(R.id.effacer);
         spinnerHauteur = findViewById(R.id.spinner_hauteur);
         spinnerLargeur = findViewById(R.id.spinner_largeur);
         spinnerPourGagner = findViewById(R.id.spinner_pour_gagner);

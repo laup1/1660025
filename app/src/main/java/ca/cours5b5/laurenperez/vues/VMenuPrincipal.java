@@ -9,15 +9,21 @@ import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.controleurs.Action;
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
 import ca.cours5b5.laurenperez.global.GCommande;
+import ca.cours5b5.laurenperez.usagers.UsagerCourant;
 
 
 public class VMenuPrincipal extends Vue {
 
+
+    public static VMenuPrincipal viewMenu;
     private Button boutonParametres;
     private Action actionParametres;
 
     private Button boutonPartie;
     private Action actionPartie;
+    private Action actionConnection;
+    private Button boutonConnection;
+    private Action actionDeconnection;
 
     public VMenuPrincipal(Context context) {
         super(context);
@@ -35,11 +41,16 @@ public class VMenuPrincipal extends Vue {
     protected void onFinishInflate(){
         super.onFinishInflate();
 
+        viewMenu = findViewById(R.id.menu);
+
         recupererControles();
 
         demanderActions();
 
         installerListeners();
+        determinerString();
+
+
 
     }
 
@@ -50,6 +61,8 @@ public class VMenuPrincipal extends Vue {
 
         boutonPartie = findViewById(R.id.bouton_partie);
 
+        boutonConnection = findViewById(R.id.connexion);
+
     }
 
     private void demanderActions() {
@@ -57,6 +70,9 @@ public class VMenuPrincipal extends Vue {
         actionParametres = ControleurAction.demanderAction(GCommande.OUVRIR_MENU_PARAMETRES);
 
         actionPartie = ControleurAction.demanderAction(GCommande.DEMARRER_PARTIE);
+        actionConnection = ControleurAction.demanderAction(GCommande.SECONNECTER);
+        actionDeconnection = ControleurAction.demanderAction(GCommande.SE_DECONNECTER);
+
 
     }
 
@@ -67,6 +83,22 @@ public class VMenuPrincipal extends Vue {
 
         installerListenerPartie();
 
+        determinerString();
+
+
+
+
+
+    }
+
+    public void determinerString(){
+        if(UsagerCourant.siUsagerConnecte()){ //true
+            boutonConnection.setText(R.string.out);
+            installerListenerDeconnection();
+        } else{
+            installerListenerConnecion();
+            boutonConnection.setText(R.string.connexion);
+        }
     }
 
     private void installerListenerPartie() {
@@ -86,6 +118,30 @@ public class VMenuPrincipal extends Vue {
             @Override
             public void onClick(View view) {
                 actionParametres.executerDesQuePossible();
+            }
+        });
+
+    }
+    private void installerListenerDeconnection() {
+
+
+
+        boutonConnection.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionDeconnection.executerDesQuePossible();
+            }
+        });
+
+    }
+
+
+    private void installerListenerConnecion() {
+
+        boutonConnection.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionConnection.executerDesQuePossible();
             }
         });
 

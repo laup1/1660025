@@ -12,9 +12,10 @@ public abstract class SourceDeDonnees {
 
     public abstract void sauvegarderModele(final String cheminSauvegarde, final Map<String, Object> objetJson);
 
-    protected String getNomModel(String cheminSauvergarde){
+    protected String getNomModel(String cheminSauvegarde){
 
-        String nomModele = cheminSauvergarde.substring(0, (cheminSauvergarde.indexOf('/')-1));
+        //String nomModele = cheminSauvergarde.substring(0, (cheminSauvegarde.indexOf('/')-1));
+        String nomModele = cheminSauvegarde.split("/")[0];
         return nomModele;
     }
 }

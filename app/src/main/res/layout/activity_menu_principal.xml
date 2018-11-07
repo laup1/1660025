@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.cours5b5.laurenperez.activites.AMenuPrincipal">
+    tools:context="ca.cours5b5.laurenperez.activites.AMenuPrincipal"
+    android:id="@+id/menu">
 
     <Button
         android:id="@+id/bouton_parametres"

@@ -143,7 +143,7 @@ public final class ControleurModeles {
 
    private static String getCheminSauvegarde(String nomModele){
 
-        return nomModele + "/";
+        return nomModele + "/" + UsagerCourant.getId();
    }
 
     public static void effacer(String nomModele){
@@ -160,7 +160,7 @@ public final class ControleurModeles {
 
     public static void effacerModeleSource(String nomModele, SourceDeDonnees sourceDeDonnees) {
 
-        sourceDeDonnees.detruireSauvegarde(nomModele);
+        sourceDeDonnees.detruireSauvegarde(getCheminSauvegarde(nomModele));
 
     }
 
