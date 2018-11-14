@@ -33,6 +33,12 @@ public final  class Serveur  extends SourceDeDonnees{
 
 
     }
+
+    @Override
+    public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
+
+    }
+
     @Override
     public void detruireSauvegarde(String cheminSauvegarde) {
 

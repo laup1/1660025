@@ -63,7 +63,7 @@ public class VParametres extends Vue {
 
     private void initialiser(){
 
-        //buttonEffacer = findViewById(R.id.effacer);
+        buttonEffacer = findViewById(R.id.effacer);
         spinnerHauteur = findViewById(R.id.spinner_hauteur);
         spinnerLargeur = findViewById(R.id.spinner_largeur);
         spinnerPourGagner = findViewById(R.id.spinner_pour_gagner);
@@ -77,7 +77,7 @@ public class VParametres extends Vue {
 
     private void demanderActions() {
 
-        actionEffacer = ControleurAction.demanderAction(GCommande.EFFACER_MODELE);
+       actionEffacer = ControleurAction.demanderAction(GCommande.EFFACER_MODELE);
         actionHauteur = ControleurAction.demanderAction(GCommande.CHOISIR_HAUTEUR);
         actionLargeur = ControleurAction.demanderAction(GCommande.CHOISIR_LARGEUR);
         actionPourGagner = ControleurAction.demanderAction(GCommande.CHOISIR_POUR_GAGNER);
@@ -94,8 +94,7 @@ public class VParametres extends Vue {
 
     private void installerListeners() {
 
-        installerListenerEffacer();
-
+       installerListenerEffacer();
         installerListenerHauteur();
         installerListenerLargeur();
         installerListenerPourGagner();

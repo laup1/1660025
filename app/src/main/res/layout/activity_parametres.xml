@@ -90,4 +90,12 @@
         app:layout_constraintStart_toStartOf="@+id/spinner_largeur"
         app:layout_constraintTop_toTopOf="@+id/texte_pour_gagner" />
 
+    <Button
+        android:id="@+id/effacer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/effacer"
+        tools:layout_editor_absoluteX="138dp"
+        tools:layout_editor_absoluteY="329dp" />
+
 </ca.cours5b5.laurenperez.vues.VParametres>

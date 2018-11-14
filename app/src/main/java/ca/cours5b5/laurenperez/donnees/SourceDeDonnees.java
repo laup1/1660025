@@ -8,7 +8,7 @@ public abstract class SourceDeDonnees {
     public abstract void detruireSauvegarde(final String cheminSauvegarde);
 
 
-    public abstract Map<String, Object> chargerModele(final String cheminSauvegarde);
+
 
     public abstract void sauvegarderModele(final String cheminSauvegarde, final Map<String, Object> objetJson);
 
@@ -18,4 +18,6 @@ public abstract class SourceDeDonnees {
         String nomModele = cheminSauvegarde.split("/")[0];
         return nomModele;
     }
+
+    public abstract void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement);
 }
