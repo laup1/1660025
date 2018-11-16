@@ -3,6 +3,7 @@ package ca.cours5b5.laurenperez.controleurs;
 import java.util.HashMap;
 import java.util.Map;
 
+import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerGetModele;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerObservateur;
 import ca.cours5b5.laurenperez.modeles.Modele;
 
@@ -20,11 +21,18 @@ public final class ControleurObservation {
 
     public static void observerModele(String nomModele, final ListenerObservateur listenerObservateur) {
 
-        Modele modele = ControleurModeles.getModele(nomModele);
+         ControleurModeles.getModele(nomModele, new ListenerGetModele() {
+            @Override
+            public void reagirAuModele(Modele modele) {
 
-        observations.put(modele, listenerObservateur);
+                observations.put(modele, listenerObservateur);
 
-        listenerObservateur.reagirNouveauModele(modele);
+                listenerObservateur.reagirNouveauModele(modele);
+
+            }
+        });
+
+
 
     }
 

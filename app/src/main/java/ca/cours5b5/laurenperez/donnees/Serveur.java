@@ -1,9 +1,15 @@
 package ca.cours5b5.laurenperez.donnees;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
+
+import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
+import ca.cours5b5.laurenperez.usagers.UsagerCourant;
 
 public final  class Serveur  extends SourceDeDonnees{
 
@@ -18,9 +24,39 @@ public final  class Serveur  extends SourceDeDonnees{
 
 
     @Override
-    public Map<String, Object> chargerModele(String cheminSauvegarde) {
+    public void chargerModele(String cheminSauvegarde, final ListenerChargement listenerChargement) {
 
-        return null;
+        if (UsagerCourant.siUsagerConnecte()) {
+
+            DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
+
+            noeud.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if (dataSnapshot.exists()) {
+
+                        Map<String, Object> objetJson = (Map<String, Object>) dataSnapshot.getValue();
+
+                        listenerChargement.reagirSucces(objetJson);
+
+                    } else {
+
+                        listenerChargement.reagirErreur(new ErreurSerialisation("Pas de données dans ce noeud "));
+
+                    }
+                }
+
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+
+                }
+            });
+        }
+
     }
 
     @Override
@@ -34,10 +70,7 @@ public final  class Serveur  extends SourceDeDonnees{
 
     }
 
-    @Override
-    public void chargerModele(String cheminSauvegarde, ListenerChargement listenerChargement) {
 
-    }
 
     @Override
     public void detruireSauvegarde(String cheminSauvegarde) {
