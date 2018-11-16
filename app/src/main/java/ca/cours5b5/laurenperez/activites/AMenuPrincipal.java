@@ -22,6 +22,7 @@ import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GConstantes;
+import ca.cours5b5.laurenperez.modeles.MPartieReseau;
 import ca.cours5b5.laurenperez.usagers.UsagerCourant;
 import ca.cours5b5.laurenperez.vues.VMenuPrincipal;
 
@@ -177,6 +178,24 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
 
 
+
+    }
+
+    private void fournirActionJoindreOuCreerPartieReseau(){
+
+        fournirActionOuvrirMenuParametres();
+        fournirActionDemarrerPartie();
+
+
+
+    }
+
+    private void transitionPartieReseau(){
+
+
+        Intent monIntention = new Intent(this, APartieReseau.class);
+        monIntention.putExtra(MPartieReseau.class.getSimpleName(), GConstantes.FIXME_JSON_PARTIE_RESEAU);
+        this.startActivity(monIntention);
 
     }
 

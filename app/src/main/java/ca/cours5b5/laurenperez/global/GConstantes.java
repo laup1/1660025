@@ -18,5 +18,15 @@ public final class GConstantes {
     public static final String EXTENSION_PAR_DEFAUT=".json";
 
     public static final int CODE_CONNEXION = 123;
+    public static final int NOMBRE_DE_VALEURS_A_CHARGER_DU_DERVEUR_PAR_DEFAUR = 10;
 
+    public static final String CLE_ID_JOUEUR_HOTE = "idJoueurHote";
+    public static final String CLE_ID_JOUEUR_INVITE = "idJoueurInvite";
+
+    public static final String CLE_COUPS_JOUEUR_HOTE = "coupsJoueurHote";
+    public static final String CLE_COUPS_JOUEUR_INVITE =  "coupsJoueurInvite";
+
+    //FIXME
+
+    public static final String FIXME_JSON_PARTIE_RESEAU = "{\"listeCoups\":[],\"parametres\":{\"largeur\":\"7\",\"pourGagner\":\"4\",\"hauteur\":\"6\"},\"idJoueurInvite\":\"PHMRKe3q7zOhfQQOwemjtfBFNp12\",\"idJoueurHote\":\"T1m8GxiBAlhLUcF6Ne0GV06nnEg1\"}";
 }

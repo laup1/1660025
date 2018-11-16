@@ -18,6 +18,11 @@ public class MPartie extends Modele implements Fournisseur {
 
     @AttributSerialisable
     public MParametresPartie parametres;
+
+    public String get__parametres() {
+        return __parametres;
+    }
+
     private final String __parametres = "parametres";
 
     @AttributSerialisable
@@ -55,7 +60,7 @@ public class MPartie extends Modele implements Fournisseur {
     }
 
 
-    private void fournirActionPlacerJeton() {
+    protected void fournirActionPlacerJeton() {
 
         ControleurAction.fournirAction(this,
                 GCommande.JOUER_COUP_ICI,

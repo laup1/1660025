@@ -11,6 +11,7 @@ import ca.cours5b5.laurenperez.donnees.ListenerChargement;
 import ca.cours5b5.laurenperez.donnees.Serveur;
 import ca.cours5b5.laurenperez.donnees.SourceDeDonnees;
 import ca.cours5b5.laurenperez.exceptions.ErreurModele;
+import ca.cours5b5.laurenperez.modeles.Identifiable;
 import ca.cours5b5.laurenperez.modeles.MParametres;
 import ca.cours5b5.laurenperez.modeles.MParametresPartie;
 import ca.cours5b5.laurenperez.modeles.MPartie;
@@ -173,7 +174,18 @@ public final class ControleurModeles {
 
    private static String getCheminSauvegarde(String nomModele){
 
-        return nomModele + "/" + UsagerCourant.getId();
+        Modele modele = modelesEnMemoire.get(nomModele);
+        String cheminSauvegarde = nomModele;
+
+        if(modele instanceof Identifiable){
+            cheminSauvegarde += "/" +((Identifiable) modele).getId();
+        } else{
+
+            cheminSauvegarde +=  "/" + UsagerCourant.getId();
+
+        }
+
+        return cheminSauvegarde;
    }
 
     public static void effacer(String nomModele){
