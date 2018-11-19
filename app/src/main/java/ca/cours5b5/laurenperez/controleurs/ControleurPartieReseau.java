@@ -79,7 +79,7 @@ public class ControleurPartieReseau {
     }
 
     private String getCheminCoupsJoueurHote(String idJoueurHote){
-       
+
         String cheminHote = getCheminPartie(idJoueurHote);
         cheminHote += "/" + GConstantes.CLE_COUPS_JOUEUR_HOTE;
         return cheminHote;
