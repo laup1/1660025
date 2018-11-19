@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ca.cours5b5.laurenperez.activites.APartie">
+    tools:context="ca.cours5b5.laurenperez.activites.APartieReseau">
 
     <ca.cours5b5.laurenperez.vues.VGrille
         android:id="@+id/grille"

@@ -46,6 +46,7 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
         fournirActionConnection();
 
         fournirActionDeconnection();
+        fournirActionJoindreOuCreerPartieReseau();
     }
 
     private void fournirActionOuvrirMenuParametres() {
@@ -183,8 +184,14 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
     private void fournirActionJoindreOuCreerPartieReseau(){
 
-        fournirActionOuvrirMenuParametres();
-        fournirActionDemarrerPartie();
+        ControleurAction.fournirAction(this,
+                GCommande.JOINDRE_OU_CREER_PARTIE_RESEAU,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+                        transitionPartieReseau();
+                    }
+                });
 
 
 

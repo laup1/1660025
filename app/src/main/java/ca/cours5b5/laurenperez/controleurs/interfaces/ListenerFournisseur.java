@@ -7,8 +7,5 @@ public abstract class ListenerFournisseur {
 
     public abstract void executer(Object... args);
 
-    public static interface ListenerGetModele {
 
-        void reagirAuModel(Modele modele);
-    }
 }

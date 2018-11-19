@@ -98,6 +98,7 @@ public class VParametres extends Vue {
         installerListenerHauteur();
         installerListenerLargeur();
         installerListenerPourGagner();
+        //installerListenerEffacer();
 
     }
     private void installerListenerEffacer() {
@@ -165,6 +166,15 @@ public class VParametres extends Vue {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+    }
+
+    private void installerListenerErase() {
+        buttonEffacer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionEffacer.executerDesQuePossible();
             }
         });
     }
