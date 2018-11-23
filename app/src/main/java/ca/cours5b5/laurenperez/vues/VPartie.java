@@ -3,6 +3,7 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.widget.TextView;
 
 import ca.cours5b5.laurenperez.R;
 import ca.cours5b5.laurenperez.controleurs.ControleurObservation;
@@ -15,7 +16,12 @@ import ca.cours5b5.laurenperez.modeles.Modele;
 
 public class VPartie extends Vue {
 
+
     private VGrille grille;
+
+    private TextView texteJoueurUn;
+    private TextView texteJoueurDeux;
+
 
     public VPartie(Context context) {
         super(context);
@@ -35,15 +41,64 @@ public class VPartie extends Vue {
 
         initialiser();
 
+        adapterTexteNomJoueurSiPaysage();
+
         observerPartie();
 
     }
+
 
     private void initialiser() {
 
         grille = findViewById(R.id.grille);
 
+        texteJoueurUn = findViewById(R.id.texte_joueur_un);
+        texteJoueurDeux = findViewById(R.id.texte_joueur_deux);
+
+
+
     }
+
+
+    private void adapterTexteNomJoueurSiPaysage() {
+
+        if(!getResources().getBoolean(R.bool.si_portrait)){
+
+            adapterTexteNomJoueurSiPaysage(texteJoueurUn);
+            adapterTexteNomJoueurSiPaysage(texteJoueurDeux);
+        }
+
+    }
+
+    private void adapterTexteNomJoueurSiPaysage(TextView texteJoueur) {
+
+        CharSequence nomJoueur = texteJoueur.getText();
+
+        String nomJoueurPaysage = texteEnPaysage(nomJoueur);
+
+        texteJoueur.setText(nomJoueurPaysage);
+
+    }
+
+    private String texteEnPaysage(CharSequence texte){
+        String textePaysage = "";
+
+        for(int i=0; i<texte.length(); i++){
+            char c = texte.charAt(i);
+
+            textePaysage += c;
+
+            if(i < texte.length()){
+                textePaysage += "\n";
+            }
+
+        }
+
+        return textePaysage;
+    }
+
+
+
 
     private void observerPartie() {
 
@@ -53,11 +108,13 @@ public class VPartie extends Vue {
                     public void reagirNouveauModele(Modele modele) {
 
                         MPartie partie = getPartie(modele);
+                        MParametresPartie parametresPartie = partie.getParametres();
 
-                        preparerAffichage(partie);
+                        grille.creerGrille(parametresPartie.getHauteur(), parametresPartie.getLargeur());
 
                         miseAJourGrille(partie);
 
+                        miseAJourNomJoueur(partie);
                     }
 
                     @Override
@@ -65,22 +122,40 @@ public class VPartie extends Vue {
 
                         MPartie partie = getPartie(modele);
 
+                        miseAJourNomJoueur(partie);
+
                         miseAJourGrille(partie);
+
 
                     }
                 });
+
     }
 
-    private void preparerAffichage(MPartie partie) {
+    protected String getNomModele(){
+        return MPartie.class.getSimpleName();
+    }
 
-        MParametresPartie parametresPartie = partie.getParametres();
+    private void miseAJourNomJoueur(MPartie partie) {
 
-        grille.creerGrille(parametresPartie.getHauteur(), parametresPartie.getLargeur());
+        switch(partie.getCouleurCourante()){
 
+            case ROUGE:
+
+                texteJoueurDeux.setVisibility(INVISIBLE);
+                texteJoueurUn.setVisibility(VISIBLE);
+                break;
+
+            case JAUNE:
+
+                texteJoueurUn.setVisibility(INVISIBLE);
+                texteJoueurDeux.setVisibility(VISIBLE);
+                break;
+
+        }
     }
 
     private MPartie getPartie(Modele modele){
-
         try{
 
             return (MPartie) modele;
@@ -90,18 +165,12 @@ public class VPartie extends Vue {
             throw new ErreurObservation(e);
 
         }
-
     }
 
     private void miseAJourGrille(MPartie partie){
 
         grille.afficherJetons(partie.getGrille());
 
-    }
-
-    protected String getNomModele(){
-
-        return MPartie.class.getSimpleName();
     }
 
 }

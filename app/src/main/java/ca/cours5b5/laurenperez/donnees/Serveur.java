@@ -8,75 +8,66 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.Map;
 
-import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
-import ca.cours5b5.laurenperez.usagers.UsagerCourant;
+import ca.cours5b5.laurenperez.controleurs.ControleurModeles;
+import ca.cours5b5.laurenperez.exceptions.ErreurModele;
+import ca.cours5b5.laurenperez.serialisation.Jsonification;
 
-public final  class Serveur  extends SourceDeDonnees{
-
+public final class Serveur extends SourceDeDonnees {
 
     private Serveur(){}
 
     private static final Serveur instance = new Serveur();
 
-    public static Serveur getInstance(){
-        return instance;
-    }
+    public static Serveur getInstance(){return instance;}
 
 
     @Override
-    public void chargerModele(String cheminSauvegarde, final ListenerChargement listenerChargement) {
+    public void chargerModele(final String cheminSauvegarde, final ListenerChargement listenerChargement) {
 
-        if (UsagerCourant.siUsagerConnecte()) {
+        DatabaseReference noeudModele = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
 
-            DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
+        noeudModele.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
 
-            noeud.addListenerForSingleValueEvent(new ValueEventListener() {
+                if(dataSnapshot.exists()){
 
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                    Map<String, Object> objetJson = (Map<String, Object>) dataSnapshot.getValue();
 
-                    if (dataSnapshot.exists()) {
+                    listenerChargement.reagirSucces(objetJson);
 
-                        Map<String, Object> objetJson = (Map<String, Object>) dataSnapshot.getValue();
+                }else{
 
-                        listenerChargement.reagirSucces(objetJson);
-
-                    } else {
-
-                        listenerChargement.reagirErreur(new ErreurSerialisation("Pas de données dans ce noeud "));
-
-                    }
-                }
-
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
+                    listenerChargement.reagirErreur(new ErreurModele("noeudInexistant: " + cheminSauvegarde));
 
                 }
-            });
-        }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                listenerChargement.reagirErreur(databaseError.toException());
+
+            }
+        });
     }
+
 
     @Override
     public void sauvegarderModele(String cheminSauvegarde, Map<String, Object> objetJson) {
 
-
-        DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
-        noeud.setValue(objetJson);
-
-
+        DatabaseReference noeudModele = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
+        noeudModele.setValue(objetJson);
 
     }
-
-
 
     @Override
     public void detruireSauvegarde(String cheminSauvegarde) {
 
-        DatabaseReference noeud = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
-        noeud.removeValue();
+        DatabaseReference noeudModele = FirebaseDatabase.getInstance().getReference(cheminSauvegarde);
+        noeudModele.removeValue();
 
     }
+
+
 }

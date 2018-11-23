@@ -7,7 +7,6 @@ import java.util.Map;
 
 
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
-import ca.cours5b5.laurenperez.controleurs.ControleurModeles;
 import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.exceptions.ErreurAction;
@@ -62,6 +61,7 @@ public class MParametres extends Modele implements Fournisseur {
 
     }
 
+
     private void fournirActionHauteur() {
 
         ControleurAction.fournirAction(this,
@@ -86,28 +86,6 @@ public class MParametres extends Modele implements Fournisseur {
     }
 
 
-    private void fournirActionEffacer() {
-
-        ControleurAction.fournirAction(this,
-                GCommande.EFFACER_MODELE,
-                new ListenerFournisseur() {
-                    @Override
-                    public void executer(Object... args) {
-
-                        try {
-
-                            ControleurModeles.effacer((String) args[0]);
-
-                        } catch (ClassCastException
-                                | IndexOutOfBoundsException e) {
-
-                            throw new ErreurAction(e);
-
-                        }
-                    }
-                });
-    }
-
     private void fournirActionLargeur() {
 
         ControleurAction.fournirAction(this,
@@ -131,6 +109,7 @@ public class MParametres extends Modele implements Fournisseur {
                 });
     }
 
+
     private void fournirActionPourGagner() {
 
         ControleurAction.fournirAction(this,
@@ -153,6 +132,7 @@ public class MParametres extends Modele implements Fournisseur {
                 });
     }
 
+
     private void genererListesDeChoix() {
 
         genererListeChoixHauteur();
@@ -162,7 +142,6 @@ public class MParametres extends Modele implements Fournisseur {
     }
 
     private List<Integer> genererListeChoix(int min, int max) {
-
         List<Integer> listeChoix = new ArrayList<>();
 
         for (int i = min; i <= max; i++) {
@@ -170,8 +149,8 @@ public class MParametres extends Modele implements Fournisseur {
         }
 
         return listeChoix;
-
     }
+
 
     private void genererListeChoixHauteur() {
 
@@ -179,11 +158,13 @@ public class MParametres extends Modele implements Fournisseur {
 
     }
 
+
     private void genererListeChoixLargeur() {
 
         choixLargeur = genererListeChoix(GConstantes.LARGEUR_MIN, GConstantes.LARGEUR_MAX);
 
     }
+
 
     private void genererListeChoixPourGagner() {
 
@@ -195,11 +176,13 @@ public class MParametres extends Modele implements Fournisseur {
 
     }
 
+
     private int calculerPourGagnerMax() {
 
         return Math.max(parametresPartie.getHauteur(), parametresPartie.getLargeur()) * 75 / 100;
 
     }
+
 
     private void ajusterPourGagnerAuBesoin(int pourGagnerMax) {
 
@@ -209,15 +192,15 @@ public class MParametres extends Modele implements Fournisseur {
 
     }
 
+
     @Override
     public void aPartirObjetJson(Map<String, Object> objetJson) throws ErreurSerialisation {
-
         parametresPartie.aPartirObjetJson((Map<String, Object>) objetJson.get(__parametresPartie));
-
     }
 
+
     @Override
-    public Map<String, Object> enObjetJson() throws ErreurSerialisation {
+    public Map<String, Object> enObjetJson() {
 
         Map<String, Object> objetJson = new HashMap<>();
 
@@ -226,5 +209,6 @@ public class MParametres extends Modele implements Fournisseur {
         return objetJson;
 
     }
+
 
 }
