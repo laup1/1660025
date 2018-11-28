@@ -18,6 +18,8 @@
 
     <string name="entete">↓\n↓\n↓</string>
 
+
+
     <string name="joueur1">joueur1</string>
     <string name="joueur2">joueur2</string>
 
@@ -34,6 +36,8 @@
 
     <string name="ROUGE">rouge</string>
     <string name="JAUNE">jaune</string>
+
+    <string name="messageConnection">Il faut se connecter pour jouer!!</string>
 
 
 </resources>

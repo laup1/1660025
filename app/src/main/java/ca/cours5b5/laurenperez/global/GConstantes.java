@@ -32,4 +32,5 @@ public final class GConstantes {
 
     public static final int DELAIS_MESSAGE_AVEC_ACTION=2000;
 
+
 }

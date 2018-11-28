@@ -1,6 +1,7 @@
 package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,7 @@ public class VMenuPrincipal extends Vue {
     private Button boutonConnexion;
     private Action actionConnexion;
     private Action actionDeconnexion;
+   // public Snackbar mySnackbar;
 
 
     @Override
@@ -66,6 +68,8 @@ public class VMenuPrincipal extends Vue {
         boutonPartieReseau = findViewById(R.id.bouton_partie_reseau);
 
         boutonConnexion = findViewById(R.id.bouton_connexion);
+
+       // mySnackbar =  Snackbar.make(this, "You have to sign in to start the game!!", 10);
 
     }
 

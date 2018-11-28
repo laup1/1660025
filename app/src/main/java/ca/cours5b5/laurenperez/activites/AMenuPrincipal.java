@@ -3,6 +3,7 @@ package ca.cours5b5.laurenperez.activites;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,8 @@ import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.modeles.MParametres;
+import ca.cours5b5.laurenperez.usagers.UsagerCourant;
+import ca.cours5b5.laurenperez.vues.VMenuPrincipal;
 
 import static ca.cours5b5.laurenperez.global.GConstantes.CODE_CONNEXION_FIREBASE;
 
@@ -48,20 +51,38 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
         fournirActionJoindreOuCreerPartieReseau();
 
+        if(!UsagerCourant.siUsagerConnecte()){
+
+            Snackbar.make(findViewById(R.id.menuPrincipal), R.string.messageConnection,
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+
+        }
+
     }
 
 
     private void fournirActionJoindreOuCreerPartieReseau() {
 
-        ControleurAction.fournirAction(this,
-                GCommande.JOINDRE_OU_CREER_PARTIE_RESEAU,
-                new ListenerFournisseur() {
-                    @Override
-                    public void executer(Object... args) {
+        if(UsagerCourant.siUsagerConnecte()) {
+
+            ControleurAction.fournirAction(this,
+                    GCommande.JOINDRE_OU_CREER_PARTIE_RESEAU,
+                    new ListenerFournisseur() {
+                        @Override
+                        public void executer(Object... args) {
 
                             transitionAttendreAdversaire();
-                    }
-                });
+                        }
+                    });
+
+        }else{
+
+            Snackbar.make(findViewById(R.id.menuPrincipal), R.string.messageConnection,
+                    Snackbar.LENGTH_SHORT)
+                    .show();
+        }
+
     }
 
 

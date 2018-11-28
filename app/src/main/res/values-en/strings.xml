@@ -30,5 +30,10 @@
     <string name="ROUGE">red</string>
     <string name="JAUNE">yellow</string>
 
+    <string name="entete">↓\n↓\n↓</string>
+
+
+    <string name="messageConnection">You have to sign in to start the game!!</string>
+
 
 </resources>
