@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -29,12 +30,24 @@ import static ca.cours5b5.laurenperez.global.GConstantes.CODE_CONNEXION_FIREBASE
 
 public class AMenuPrincipal extends Activite implements Fournisseur {
 
+
+//FIXME
+    public static List<AuthUI.IdpConfig> fournisseursDeConnexion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_principal);
 
         fournirActions();
+
+        if(!UsagerCourant.siUsagerConnecte()){
+
+            Snackbar.make(findViewById(R.id.menuPrincipal), R.string.messageConnection,
+                    Snackbar.LENGTH_LONG)
+                    .show();
+
+        }
 
     }
 
@@ -64,7 +77,7 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
 
     private void fournirActionJoindreOuCreerPartieReseau() {
 
-        if(UsagerCourant.siUsagerConnecte()) {
+
 
             ControleurAction.fournirAction(this,
                     GCommande.JOINDRE_OU_CREER_PARTIE_RESEAU,
@@ -76,12 +89,8 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                         }
                     });
 
-        }else{
+            //Toast.makeText(this,R.string.messageConnection, Toast.LENGTH_LONG).show();
 
-            Snackbar.make(findViewById(R.id.menuPrincipal), R.string.messageConnection,
-                    Snackbar.LENGTH_SHORT)
-                    .show();
-        }
 
     }
 
@@ -168,13 +177,16 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
     }
 
 
+
     private void effectuerConnexion() {
 
-        List<AuthUI.IdpConfig> fournisseursDeConnexion = new ArrayList<>();
+       fournisseursDeConnexion = new ArrayList<>();
 
         fournisseursDeConnexion.add(new AuthUI.IdpConfig.GoogleBuilder().build());
         fournisseursDeConnexion.add(new AuthUI.IdpConfig.EmailBuilder().build());
         fournisseursDeConnexion.add(new AuthUI.IdpConfig.PhoneBuilder().build());
+
+
 
         Intent intentionConnexion = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -193,7 +205,9 @@ public class AMenuPrincipal extends Activite implements Fournisseur {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
 
-                        // Rien
+                        Snackbar.make(findViewById(R.id.menuPrincipal), R.string.messageConnection,
+                                Snackbar.LENGTH_LONG)
+                                .show();
 
                     }
                 });
