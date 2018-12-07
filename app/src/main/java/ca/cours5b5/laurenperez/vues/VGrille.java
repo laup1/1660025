@@ -20,6 +20,8 @@ import ca.cours5b5.laurenperez.global.GCouleur;
 import ca.cours5b5.laurenperez.modeles.MColonne;
 import ca.cours5b5.laurenperez.modeles.MGrille;
 import ca.cours5b5.laurenperez.modeles.MJeton;
+import ca.cours5b5.laurenperez.modeles.MParametres;
+import ca.cours5b5.laurenperez.modeles.MPartie;
 
 
 public class VGrille  extends GridLayout implements Fournisseur {
@@ -43,7 +45,7 @@ public class VGrille  extends GridLayout implements Fournisseur {
 
     }
 
-    private List<Integer> entetesADesactiver = new ArrayList<>();
+    public static List<Integer> entetesADesactiver = new ArrayList<>();
 
     private List<Colonne> colonnesDeCases;
 
@@ -94,14 +96,11 @@ public class VGrille  extends GridLayout implements Fournisseur {
                                 entetes.get(i).setActive(false);
                             }
 
+                        }if(!entetesADesactiver.isEmpty()){
+                            desactiver();
                         }
 
-                        for(VEntete entete: entetes){
 
-                            if(!entete.isActive()){
-                                entete.setEnabled(false);
-                            }
-                        }
 
 
                     }
@@ -118,6 +117,7 @@ public class VGrille  extends GridLayout implements Fournisseur {
                    int colonne = (Integer) args[0];
                          entetes.get(colonne).setEnabled(false);
                          entetes.get(colonne).setActive(false);
+                    Log.d("prueba2", "prueba" + entetes.indexOf(colonne) );
 
 
                 } catch (ClassCastException e) {
@@ -125,6 +125,16 @@ public class VGrille  extends GridLayout implements Fournisseur {
                 }
             }
         });
+    }
+
+    private  void desactiver(){
+
+        for(int i = 0; i < entetesADesactiver.size(); i++){
+
+            entetes.get(entetesADesactiver.get(i)).setEnabled(false);
+        }
+
+
     }
 
     private void initialiser() {

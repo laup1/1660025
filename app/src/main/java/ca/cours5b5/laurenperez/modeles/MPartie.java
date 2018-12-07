@@ -17,6 +17,7 @@ import ca.cours5b5.laurenperez.exceptions.ErreurSerialisation;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GCouleur;
 import ca.cours5b5.laurenperez.serialisation.AttributSerialisable;
+import ca.cours5b5.laurenperez.vues.VGrille;
 
 public class MPartie extends Modele implements Fournisseur {
 
@@ -29,7 +30,7 @@ public class MPartie extends Modele implements Fournisseur {
     public List<Integer> listeCoups;
     private final String __listeCoups = "listeCoups";
 
-    private MGrille grille;
+    public MGrille grille;
     private GCouleur couleurCourante;
     private boolean active = false;
 
@@ -85,6 +86,12 @@ public class MPartie extends Modele implements Fournisseur {
                 });
     }
 
+    public boolean gagnant(){
+
+        return grille.siCouleurGagne(couleurCourante, parametres.getPourGagner());
+
+    }
+
 
     protected void jouerCoup(int colonne) {
 
@@ -93,21 +100,19 @@ public class MPartie extends Modele implements Fournisseur {
 
             jouerCoupLegal(colonne);
 
-             if (!siCoupLegal(colonne) && active ){
+             if (!siCoupLegal(colonne) && active || grille.siCouleurGagne(couleurCourante, parametres.getPourGagner()) && active){
 
                  Action action = ControleurAction.demanderAction(GCommande.DESACTIVER_ENTETE);
                  action.setArguments(colonne);
                  action.executerDesQuePossible();
+                 VGrille.entetesADesactiver.add(colonne);
 
             }
-
-
-
 
             active = true;
         }else{
 
-            Action action = ControleurAction.demanderAction(GCommande.DESACTIVER_ENTETE);
+            Action action = ControleurAction.demanderAction(GCommande.ENTETES);
             action.setArguments(colonne);
             action.executerDesQuePossible();
 
