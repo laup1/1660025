@@ -163,7 +163,6 @@ public class VMenuPrincipal extends Vue {
                     }else{
                         Toast.makeText(getContext(),R.string.messageConnection, Toast.LENGTH_LONG).show();
                         actionConnexion.executerDesQuePossible();
-                        actionConnexion.notify();
                         boutonConnexion.setText(R.string.deconnexion);
 
 

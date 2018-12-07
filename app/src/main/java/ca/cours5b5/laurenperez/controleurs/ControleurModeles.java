@@ -13,6 +13,7 @@ import ca.cours5b5.laurenperez.donnees.Serveur;
 import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
 import ca.cours5b5.laurenperez.donnees.SourceDeDonnees;
 import ca.cours5b5.laurenperez.exceptions.ErreurModele;
+import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GConstantes;
 import ca.cours5b5.laurenperez.modeles.Identifiable;
 import ca.cours5b5.laurenperez.modeles.MParametres;
@@ -186,6 +187,7 @@ public final class ControleurModeles {
                                            ListenerGetModele listenerGetModele) {
 
         listenerGetModele.reagirAuModele(modele);
+        ControleurAction.demanderAction(GCommande.ENTETES).executerDesQuePossible();
 
     }
 

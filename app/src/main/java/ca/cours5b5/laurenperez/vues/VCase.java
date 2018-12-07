@@ -12,7 +12,11 @@ import ca.cours5b5.laurenperez.modeles.MJeton;
 
 
 public class VCase extends AppCompatButton {
+    public boolean isCouleur() {
+        return couleur;
+    }
 
+    private boolean couleur = false;
 
     public VCase(Context context) {
         super(context);
@@ -60,13 +64,13 @@ public class VCase extends AppCompatButton {
             case ROUGE:
 
                 setBackgroundColor(getResources().getColor(R.color.ROUGE, null));
-
+                couleur = true;
                 break;
 
             case JAUNE:
 
                 setBackgroundColor(getResources().getColor(R.color.JAUNE, null));
-
+                couleur = true;
                 break;
 
         }

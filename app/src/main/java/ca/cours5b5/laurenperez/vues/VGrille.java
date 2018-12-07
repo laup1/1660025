@@ -12,6 +12,9 @@ import java.util.List;
 
 import ca.cours5b5.laurenperez.controleurs.Action;
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
+import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
+import ca.cours5b5.laurenperez.controleurs.interfaces.ListenerFournisseur;
+import ca.cours5b5.laurenperez.exceptions.ErreurAction;
 import ca.cours5b5.laurenperez.global.GCommande;
 import ca.cours5b5.laurenperez.global.GCouleur;
 import ca.cours5b5.laurenperez.modeles.MColonne;
@@ -19,7 +22,7 @@ import ca.cours5b5.laurenperez.modeles.MGrille;
 import ca.cours5b5.laurenperez.modeles.MJeton;
 
 
-public class VGrille extends GridLayout {
+public class VGrille  extends GridLayout implements Fournisseur {
 
     public VGrille(Context context) {
         super(context);
@@ -35,7 +38,12 @@ public class VGrille extends GridLayout {
 
     private int nombreRangees;
 
-    private class Colonne extends ArrayList<VCase> {}
+    private class Colonne extends ArrayList<VCase> {
+
+
+    }
+
+    private List<Integer> entetesADesactiver = new ArrayList<>();
 
     private List<Colonne> colonnesDeCases;
 
@@ -52,6 +60,14 @@ public class VGrille extends GridLayout {
 
         demanderActionEntete();
 
+        desactiverEntetes();
+
+        desactiverEntete();
+
+
+
+
+
 
     }
 
@@ -59,6 +75,56 @@ public class VGrille extends GridLayout {
 
         actionEntete = ControleurAction.demanderAction(GCommande.PLACER_JETON_ICI);
 
+    }
+
+    private void desactiverEntetes() {
+        ControleurAction.fournirAction(this,
+                GCommande.ENTETES,
+                new ListenerFournisseur() {
+                    @Override
+                    public void executer(Object... args) {
+
+                        for (Colonne colonne : colonnesDeCases) {
+
+                            int i = colonnesDeCases.indexOf(colonne);
+
+                            if (colonne.get((colonne.size()-1)).isCouleur()){
+
+                                entetes.get(i).setEnabled(false);
+                                entetes.get(i).setActive(false);
+                            }
+
+                        }
+
+                        for(VEntete entete: entetes){
+
+                            if(!entete.isActive()){
+                                entete.setEnabled(false);
+                            }
+                        }
+
+
+                    }
+                });
+    }
+
+
+
+    private void desactiverEntete() {
+        ControleurAction.fournirAction(this, GCommande.DESACTIVER_ENTETE, new ListenerFournisseur() {
+            @Override
+            public void executer(Object... args) {
+                try {
+                   int colonne = (Integer) args[0];
+                         entetes.get(colonne).setEnabled(false);
+                         entetes.get(colonne).setActive(false);
+
+
+                } catch (ClassCastException e) {
+                    throw new ErreurAction(e);
+                }
+            }
+        });
     }
 
     private void initialiser() {

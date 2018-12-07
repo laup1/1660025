@@ -36,6 +36,13 @@ public class APartie extends Activite implements Fournisseur {
                 });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        ControleurAction.demanderAction(GCommande.ENTETES).executerDesQuePossible();
+
+    }
+
 
     @Override
     protected void onPause() {

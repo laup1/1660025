@@ -23,6 +23,18 @@ public class VEntete extends AppCompatButton {
 
     private int colonne;
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
+
+    private boolean active = true;
+
     public VEntete(Context context, int colonne) {
         super(context);
 

@@ -65,7 +65,7 @@ public class MGrille extends Modele  {
     }
 
 
-    public boolean siCouleurGagne(GCouleur couleur, int pourGagner){
+    public  boolean siCouleurGagne(GCouleur couleur, int pourGagner){
 
         for(int idColonne = 0; idColonne < colonnes.size(); idColonne++){
 

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "563473263363",
+    "firebase_url": "https://laurenperez-d140f.firebaseio.com",
+    "project_id": "laurenperez-d140f",
+    "storage_bucket": "laurenperez-d140f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563473263363:android:7c9c775f40d7ec70",
+        "android_client_info": {
+          "package_name": "ca.cours5b5.laurenperez"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "563473263363-huoo2dl8s0bl1joqku7ttfbcroa1t1hl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ca.cours5b5.laurenperez",
+            "certificate_hash": "43e7fd8e5d28a576188cb22f9b5b7f36fa8ee2c5"
+          }
+        },
+        {
+          "client_id": "563473263363-p0li7ck597qc4irn37bqjn3jiusgihn4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0rl-pGUsPixVrjszfwpjV1r0ACkXEzLY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "563473263363-p0li7ck597qc4irn37bqjn3jiusgihn4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

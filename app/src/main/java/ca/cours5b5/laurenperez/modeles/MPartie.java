@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ca.cours5b5.laurenperez.controleurs.Action;
 import ca.cours5b5.laurenperez.controleurs.ControleurAction;
 import ca.cours5b5.laurenperez.controleurs.ControleurPartie;
 import ca.cours5b5.laurenperez.controleurs.interfaces.Fournisseur;
@@ -30,6 +31,7 @@ public class MPartie extends Modele implements Fournisseur {
 
     private MGrille grille;
     private GCouleur couleurCourante;
+    private boolean active = false;
 
     public MPartie(MParametresPartie parametres) {
 
@@ -86,8 +88,29 @@ public class MPartie extends Modele implements Fournisseur {
 
     protected void jouerCoup(int colonne) {
 
+
         if (siCoupLegal(colonne)) {
+
             jouerCoupLegal(colonne);
+
+             if (!siCoupLegal(colonne) && active ){
+
+                 Action action = ControleurAction.demanderAction(GCommande.DESACTIVER_ENTETE);
+                 action.setArguments(colonne);
+                 action.executerDesQuePossible();
+
+            }
+
+
+
+
+            active = true;
+        }else{
+
+            Action action = ControleurAction.demanderAction(GCommande.DESACTIVER_ENTETE);
+            action.setArguments(colonne);
+            action.executerDesQuePossible();
+
         }
     }
 
@@ -180,6 +203,7 @@ public class MPartie extends Modele implements Fournisseur {
         for(Integer coup : coupsARejouer){
 
             jouerCoup(coup);
+            active = false;
 
         }
     }

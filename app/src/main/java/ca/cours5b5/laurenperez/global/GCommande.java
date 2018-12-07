@@ -16,6 +16,8 @@ public enum GCommande {
 
     CONNEXION,
     DECONNEXION,
+    ENTETES,
+    DESACTIVER_ENTETE,
 
 
     EFFACER_PARTIE_COURANTE,
