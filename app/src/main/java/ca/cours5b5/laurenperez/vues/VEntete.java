@@ -1,8 +1,12 @@
 package ca.cours5b5.laurenperez.vues;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+
+import com.firebase.ui.auth.data.model.Resource;
 
 import ca.cours5b5.laurenperez.R;
 
@@ -32,7 +36,6 @@ public class VEntete extends AppCompatButton {
     }
 
 
-
     private boolean active = true;
 
     public VEntete(Context context, int colonne) {
@@ -41,7 +44,10 @@ public class VEntete extends AppCompatButton {
         // Atelier 08: afficher la colonne pour deboguer
         setText(colonne + "\n" + getResources().getString(R.string.entete));
 
+        setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.ripple_effect));
+
         this.colonne = colonne;
+        //setBackgroundDrawable(android:background="@drawable/ripple_effect");
     }
 
     public int getColonne() {

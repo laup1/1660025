@@ -3,6 +3,7 @@ package ca.cours5b5.laurenperez.vues;
 import android.content.Context;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -17,6 +18,13 @@ public class VCase extends AppCompatButton {
     }
 
     private boolean couleur = false;
+
+    private int rangee;
+    private boolean anime;
+    private int colonne;
+
+
+
 
     public VCase(Context context) {
         super(context);
@@ -37,6 +45,8 @@ public class VCase extends AppCompatButton {
     public VCase(Context context, int rangee, int colonne) {
         super(context);
 
+        this.colonne = colonne;
+        this.rangee = rangee;
         // Atelier08: afficher les indices
         setText(""+rangee+","+colonne);
 
@@ -54,6 +64,25 @@ public class VCase extends AppCompatButton {
     public void afficherJeton(MJeton jeton) {
 
         afficherCouleurJeton(jeton);
+        if(!anime){
+            animer();
+        }
+
+    }
+
+
+    public void animer() {
+
+        float yAnimation = -getResources().getDisplayMetrics().heightPixels + ( getHeight() * rangee);
+
+        this.setY(yAnimation);
+
+        //float  = 0;
+
+
+        this.animate().translationY(0f).setInterpolator(new AccelerateDecelerateInterpolator()).setDuration(450);
+
+        anime = true;
 
     }
 

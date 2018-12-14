@@ -21,7 +21,8 @@
         app:layout_constraintEnd_toEndOf="@+id/bouton_partie_reseau"
         app:layout_constraintStart_toStartOf="@+id/bouton_partie_reseau"
         app:layout_constraintTop_toBottomOf="@+id/bouton_partie_reseau"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="1.0"
+        android:background="@drawable/ripple_effect"/>
 
     <Button
         android:id="@+id/bouton_partie"
@@ -37,7 +38,8 @@
         app:layout_constraintStart_toStartOf="@+id/bouton_connexion"
         app:layout_constraintTop_toBottomOf="@+id/bouton_connexion"
         app:layout_constraintVertical_bias="0.17000002"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        android:background="@drawable/ripple_effect"/>
 
     <Button
         android:id="@+id/bouton_connexion"
@@ -52,7 +54,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/ripple_effect"/>
 
     <Button
         android:id="@+id/bouton_partie_reseau"
@@ -67,5 +70,6 @@
         app:layout_constraintEnd_toEndOf="@+id/bouton_partie"
         app:layout_constraintStart_toStartOf="@+id/bouton_partie"
         app:layout_constraintTop_toBottomOf="@+id/bouton_partie"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        android:background="@drawable/ripple_effect"/>
 </ca.cours5b5.laurenperez.vues.VMenuPrincipal>
