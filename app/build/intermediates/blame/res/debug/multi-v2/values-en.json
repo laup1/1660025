@@ -1,16 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Laurent\\Desktop\\lau\\college\\session5\\1660025\\1660025\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en\\values-en.xml",
+            "outputFile": "C:\\Users\\lau\\AndroidStudioProjects\\1660025\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-en\\values-en.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Laurent\\Desktop\\lau\\college\\session5\\1660025\\1660025\\app\\src\\main\\res\\values-en\\strings.xml",
+                    "source": "C:\\Users\\lau\\AndroidStudioProjects\\1660025\\app\\src\\main\\res\\values-en\\strings.xml",
                     "from": {
                         "startLines": "30,29,4,20,21,23,25,32,7,13,14,17,18,8,35,27,11,5,9",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
-                        "startOffsets": "857,819,57,522,566,614,687,899,147,337,376,433,477,192,944,763,286,100,236",
+                        "startOffsets": "887,848,61,542,587,637,712,931,154,350,390,450,495,200,979,790,297,105,245",
                         "endColumns": "40,37,42,43,46,71,74,42,44,38,54,43,43,43,85,54,49,45,48",
-                        "endOffsets": "893,852,95,561,608,681,757,937,187,371,426,472,516,231,1025,813,331,141,280"
+                        "endOffsets": "923,881,99,581,629,704,782,969,194,384,440,489,534,239,1060,840,342,146,289"
                     },
                     "to": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",

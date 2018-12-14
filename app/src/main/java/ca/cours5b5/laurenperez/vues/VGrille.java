@@ -67,10 +67,6 @@ public class VGrille  extends GridLayout implements Fournisseur {
         desactiverEntete();
 
 
-
-
-
-
     }
 
     private void demanderActionEntete() {
